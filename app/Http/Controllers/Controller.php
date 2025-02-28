@@ -10,6 +10,18 @@ namespace App\Http\Controllers;
  *          email="brunocostasilva62@gmail.com"
  *      )
  * ),
+ * @OA\Tag(
+ *          name="Rota de Acesso e Logout",
+ *          description="Endpoints relacionados a pedidos"
+ *      ),
+ * @OA\Tag(
+ *           name="Rota de empresas que vai utilizar o sistema",
+ *           description="Endpoints relacionados a empresas do sistema (FULL)"
+ *       ),
+ * @OA\Tag(
+ *            name="Rota para de gerenciar usuario",
+ *            description="Endpoints relacionados a usuarios (FULL)"
+ *        ),
  * @OA\SecurityScheme(
  *          securityScheme="bearerAuth",
  *          type="http",

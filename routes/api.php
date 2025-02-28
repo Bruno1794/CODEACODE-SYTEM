@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\Api\CompanyController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\LoginController;
 
@@ -15,7 +16,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     ##Company
     Route::get('companys', [CompanyController::class, 'index']);
     Route::post('companys', [CompanyController::class, 'post']);
+    Route::get('companys-users/{company}', [CompanyController::class, 'indexUsers']);
     Route::put('companys/{company}', [CompanyController::class, 'update']);
     Route::put('companys-status/{company}', [CompanyController::class, 'updateStatus']);
+
+    ##Usuario
+    Route::put('update-password/{user}',[UserController::class, 'updatePassword']);
 
 });

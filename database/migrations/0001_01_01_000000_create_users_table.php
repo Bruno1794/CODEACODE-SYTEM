@@ -18,7 +18,6 @@ return new class extends Migration {
             $table->enum('type_user', ['FULL', 'ADMIN', 'REPRESENTANTE'])->default('ADMIN');
             $table->boolean('status')->default(1);// 0: Inativo e 1: Ativo;
             $table->string('password');
-            $table->foreignId('user_id')->nullable()->constrained('users');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -244,6 +244,101 @@
                 ]
             }
         },
+        "/api/companys-users/{id}": {
+            "put": {
+                "tags": [
+                    "Rota de empresas que vai utilizar o sistema"
+                ],
+                "summary": "Busca todos os usuarios referente a empresa passado pelo id",
+                "operationId": "db370567067f8287df20412e31ecaf32",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da empresa que deseja buscar os usuarios",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Credenciais do usuário",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "success": {
+                                        "type": "boolean",
+                                        "example": "true"
+                                    },
+                                    "user": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "Bruno Costa"
+                                            },
+                                            "username": {
+                                                "type": "string",
+                                                "format": "text",
+                                                "example": "bruno1020"
+                                            },
+                                            "type_user": {
+                                                "type": "ENUM",
+                                                "format": "text",
+                                                "example": "FULL"
+                                            },
+                                            "status": {
+                                                "type": "boolean",
+                                                "format": "text",
+                                                "example": "1"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuário autenticado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Company updated successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/companys-status/{id}": {
             "put": {
                 "tags": [
@@ -523,6 +618,74 @@
                     }
                 ]
             }
+        },
+        "/api/update-password/{id}": {
+            "put": {
+                "tags": [
+                    "Rota para de gerenciar usuario"
+                ],
+                "summary": "Altera senha do Usuario",
+                "operationId": "e59402ce86dab790ae17feca7e214234",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do usuário a ser buscado",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Credenciais do usuário",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "password": {
+                                        "type": "password",
+                                        "format": "text",
+                                        "example": "051161Tu"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuário autenticado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Password changed successfully!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -542,12 +705,16 @@
     },
     "tags": [
         {
-            "name": "Rota de empresas que vai utilizar o sistema",
-            "description": "Rota de empresas que vai utilizar o sistema"
+            "name": "Rota de Acesso e Logout",
+            "description": "Endpoints relacionados a pedidos"
         },
         {
-            "name": "Rota de Acesso e Logout",
-            "description": "Rota de Acesso e Logout"
+            "name": "Rota de empresas que vai utilizar o sistema",
+            "description": "Endpoints relacionados a empresas do sistema (FULL)"
+        },
+        {
+            "name": "Rota para de gerenciar usuario",
+            "description": "Endpoints relacionados a usuarios (FULL)"
         }
     ]
 }

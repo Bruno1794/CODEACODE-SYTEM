@@ -62,15 +62,7 @@ class CompanyController extends Controller
     {
         DB::beginTransaction();
         try {
-            $user = User::create([
-                'name' => $request->name,
-                'username' => $request->username,
-                'type_user' => "ADMIN",
-                'user_id' => Auth::id(),
-                'password' => Hash::make($request->password, ['rounds' => 12]),
-            ]);
-
-            Company::create([
+            $company = Company::create([
                 'name' => $request->name,
                 'cpf_cnpj' => $request->cpf_cnpj,
                 'name_fantasy' => $request->name_fantasy,
@@ -83,7 +75,15 @@ class CompanyController extends Controller
                 'inscription_state' => $request->inscription_state,
                 'phone' => $request->phone,
                 'date_expiration' => Carbon::now()->addDays(30),
-                'user_id' => $user->id,
+                'user_id' => Auth::id(),
+            ]);
+
+            User::create([
+                'name' => $request->name,
+                'username' => $request->username,
+                'type_user' => "ADMIN",
+                'company_id' => $company->id,
+                'password' => Hash::make($request->password, ['rounds' => 12]),
             ]);
 
             DB::commit();
@@ -161,6 +161,68 @@ class CompanyController extends Controller
             ], 400);
         }
     }
+
+    /**
+     * @OA\Put(
+     *     path="/api/companys-users/{id}",
+     *     tags={"Rota de empresas que vai utilizar o sistema"},
+     *     summary="Busca todos os usuarios referente a empresa passado pelo id",
+     *  security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     * *         name="id",
+     * *         in="path",
+     * *         required=true,
+     * *         description="ID da empresa que deseja buscar os usuarios",
+     * *         @OA\Schema(type="integer", example=1)
+     * *     ),
+     *
+     *     @OA\RequestBody(
+     *      description="Credenciais do usuário",
+     *
+    @OA\JsonContent(
+     *
+     *              @OA\Property(property="success", type="boolean", example="true"),
+     *              @OA\Property(property="user", type="object",
+     * *                  @OA\Property(property="id", type="integer", example=1),
+     * *                  @OA\Property(property="name", type="string", example="Bruno Costa"),
+     * *                  @OA\Property(property="username", type="string", format="text", example="bruno1020"),
+     * *                  @OA\Property(property="type_user", type="ENUM", format="text", example="FULL"),
+     * *                  @OA\Property(property="status", type="boolean", format="text", example="1"),
+     * *              )
+     * *          )
+     * *      ),
+     * @OA\Response(
+     *          response=200,
+     *          description="Usuário autenticado com sucesso",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="success", type="boolean", example="true"),
+     *              @OA\Property(property="message", type="string", example="Company updated successfully"),
+     *
+     *          )
+     *      ),
+     * @OA\Response(
+     *         response=401,
+     *         description="Credenciais inválidas"
+     *     )
+     * )
+     */
+    public function indexUsers(Company $company): JsonResponse
+    {
+        $userLogado = Auth::user();
+        if ($userLogado->type_user === "FULL") {
+            $user = User::where('company_id', $company->id)->get();
+            return response()->json([
+                'success' => true,
+                'users' => $user,
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => "You don't have permission to access this page",
+            ], 401);
+        }
+    }
+
 
     /**
      * @OA\Put(
@@ -286,5 +348,7 @@ class CompanyController extends Controller
             ], 401);
         }
     }
+
+
 }
 
