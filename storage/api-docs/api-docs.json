@@ -261,7 +261,7 @@
                 "tags": [
                     "Rota de empresas que vai utilizar o sistema"
                 ],
-                "summary": "Se a empresta etivar Ativa e receber essa requicição ela Destavia ou visse versa.",
+                "summary": "Se a empresta estiver Ativa e receber essa requicição ela Desativa ou visse versa.",
                 "operationId": "cbe3730cbf753dc963c6dc855f205ae6",
                 "parameters": [
                     {
@@ -287,7 +287,24 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Company updated successfully"
+                        "description": "Company updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Company updated successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }

@@ -173,7 +173,7 @@ class CompanyController extends Controller
      *     path="/api/companys/id",
      *     tags={"Rota de empresas que vai utilizar o sistema"},
      *     summary="Alterar o status para Ativo ou Inativo",
-     *          summary="Se a empresta etivar Ativa e receber essa requicição ela Desativa ou visse versa.",
+     *          summary="Se a empresta estiver Ativa e receber essa requicição ela Desativa ou visse versa.",
      *      @OA\Parameter(
      *  *         name="id",
      *  *         in="header",
@@ -190,8 +190,15 @@ class CompanyController extends Controller
      *   *     ),
      *
      * @OA\Response(
+     *
      *          response=200,
      *          description="Company updated successfully",
+     *     @OA\JsonContent(
+     *               @OA\Property(property="success", type="boolean", example="true"),
+     *               @OA\Property(property="message", type="string", example="Company updated successfully"),
+     *
+     *           )
+     *       ),
      *
      *          )
      *      ),
