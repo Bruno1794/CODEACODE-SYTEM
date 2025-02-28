@@ -18,16 +18,6 @@
                 "operationId": "00db5b4605d1f7d690dd78c799cd0800",
                 "parameters": [
                     {
-                        "name": "Authorization",
-                        "in": "header",
-                        "description": "Token Laravel para autenticação. Deve ser enviado no formato 'Bearer {token}'",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "Bearer eyJhbGciOiJIUzI1N..."
-                        }
-                    },
-                    {
                         "name": "status",
                         "in": "header",
                         "description": "Passar no parametro 1 para ativos e 0 para Inativos'",
@@ -123,7 +113,12 @@
                     "401": {
                         "description": "Credenciais inválidas"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -131,18 +126,6 @@
                 ],
                 "summary": "Cadastro de empresas",
                 "operationId": "0ae59365e605aa52e0ed1569ccca8c92",
-                "parameters": [
-                    {
-                        "name": "Authorization",
-                        "in": "header",
-                        "description": "Token Laravel para autenticação. Deve ser enviado no formato 'Bearer {token}'",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "Bearer eyJhbGciOiJIUzI1N..."
-                        }
-                    }
-                ],
                 "requestBody": {
                     "description": "Credenciais do usuário",
                     "content": {
@@ -253,7 +236,12 @@
                     "401": {
                         "description": "Credenciais inválidas"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/companys/id": {
@@ -272,16 +260,6 @@
                         "schema": {
                             "type": "number",
                             "example": "1"
-                        }
-                    },
-                    {
-                        "name": "Authorization",
-                        "in": "header",
-                        "description": "Passar o token'",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "Bearer eyJhbGciOiJIUzI1N..."
                         }
                     }
                 ],
@@ -306,7 +284,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/login": {
@@ -404,18 +387,6 @@
                 ],
                 "summary": "Realiza o logout do usuario logado atravez do token de autenticação",
                 "operationId": "8f9216a1ffa35b50dda879998d4b9213",
-                "parameters": [
-                    {
-                        "name": "Authorization",
-                        "in": "header",
-                        "description": "Token Laravel para autenticação. Deve ser enviado no formato 'Bearer {token}'",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "Bearer eyJhbGciOiJIUzI1N..."
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "Logout realizado com sucesso!"
@@ -423,7 +394,12 @@
                     "401": {
                         "description": "Credenciais inválidas"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         }
     },
@@ -431,6 +407,14 @@
         "responses": {
             "401": {
                 "description": "Credenciais inválidas"
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "description": "Autenticação via Bearer Token",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
             }
         }
     },

@@ -21,13 +21,7 @@ class CompanyController extends Controller
      *     path="/api/companys",
      *     tags={"Rota de empresas que vai utilizar o sistema"},
      *     summary="Cadastro de empresas",
-     *          @OA\Parameter(
-     *  *         name="Authorization",
-     *  *         in="header",
-     *  *         required=true,
-     *  *         description="Token Laravel para autenticação. Deve ser enviado no formato 'Bearer {token}'",
-     *  *         @OA\Schema(type="string", example="Bearer eyJhbGciOiJIUzI1N...")
-     *  *     ),
+     *  security={{"bearerAuth":{}}},
      *     @OA\RequestBody(
      *      description="Credenciais do usuário",
      *
@@ -112,13 +106,7 @@ class CompanyController extends Controller
      *     tags={"Rota de empresas que vai utilizar o sistema"},
      *     summary="Listar todas empresas",
      *          summary="Lista Todas empresas Cadastrada",
-     *          @OA\Parameter(
-     *  *         name="Authorization",
-     *  *         in="header",
-     *  *         required=true,
-     *  *         description="Token Laravel para autenticação. Deve ser enviado no formato 'Bearer {token}'",
-     *  *         @OA\Schema(type="string", example="Bearer eyJhbGciOiJIUzI1N...")
-     *  *     ),
+     *  security={{"bearerAuth":{}}},
      *      @OA\Parameter(
      *  *         name="status",
      *  *         in="header",
@@ -159,13 +147,19 @@ class CompanyController extends Controller
     public function index(Request $request): JsonResponse
     {
         $user = Auth::user();
-        $companey = Company::where('user_id', Auth::id())
-            ->where('status', $request->status ? 1 : 0)
-            ->get();
-        return response()->json([
-            'success' => true,
-            'companey' => $companey,
-        ], 200);
+        if ($user->type_user === "FULL") {
+            $companey = Company::where('status', $request->status ? $request->status : 1)
+                ->get();
+            return response()->json([
+                'success' => true,
+                'companey' => $companey,
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => "You don't have permission to access this page",
+            ], 400);
+        }
     }
 
     /**
@@ -174,6 +168,7 @@ class CompanyController extends Controller
      *     tags={"Rota de empresas que vai utilizar o sistema"},
      *     summary="Alterar o status para Ativo ou Inativo",
      *          summary="Se a empresta estiver Ativa e receber essa requicição ela Desativa ou visse versa.",
+     *       security={{"bearerAuth":{}}},
      *      @OA\Parameter(
      *  *         name="id",
      *  *         in="header",
@@ -181,13 +176,6 @@ class CompanyController extends Controller
      *  *         description="Passar no parametro o ID da empresa'",
      *  *         @OA\Schema(type="number", example="1")
      *  *     ),
-     *           @OA\Parameter(
-     *   *         name="Authorization",
-     *   *         in="header",
-     *   *         required=true,
-     *   *         description="Passar o token'",
-     *   *         @OA\Schema(type="string", example="Bearer eyJhbGciOiJIUzI1N...")
-     *   *     ),
      *
      * @OA\Response(
      *
@@ -219,6 +207,6 @@ class CompanyController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Company updated successfully',
-        ],200);
+        ], 200);
     }
 }

@@ -90,13 +90,7 @@ class LoginController extends Controller
      *     path="/api/logout",
      *     tags={"Rota de Acesso e Logout"},
      *     summary="Realiza o logout do usuario logado atravez do token de autenticação",
-     *     @OA\Parameter(
-     * *         name="Authorization",
-     * *         in="header",
-     * *         required=true,
-     * *         description="Token Laravel para autenticação. Deve ser enviado no formato 'Bearer {token}'",
-     * *         @OA\Schema(type="string", example="Bearer eyJhbGciOiJIUzI1N...")
-     * *     ),
+    *       security={{"bearerAuth":{}}},
      *
      *      @OA\Response(
      *          response=200,
