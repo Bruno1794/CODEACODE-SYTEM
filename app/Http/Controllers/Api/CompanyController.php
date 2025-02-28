@@ -163,7 +163,7 @@ class CompanyController extends Controller
     }
 
     /**
-     * @OA\Put(
+     * @OA\Get(
      *     path="/api/companys-users/{id}",
      *     tags={"Rota de empresas que vai utilizar o sistema"},
      *     summary="Busca todos os usuarios referente a empresa passado pelo id",
