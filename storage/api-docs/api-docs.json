@@ -244,22 +244,22 @@
                 ]
             }
         },
-        "/api/companys/id": {
+        "/api/companys-status/{id}": {
             "put": {
                 "tags": [
                     "Rota de empresas que vai utilizar o sistema"
                 ],
                 "summary": "Se a empresta estiver Ativa e receber essa requicição ela Desativa ou visse versa.",
-                "operationId": "cbe3730cbf753dc963c6dc855f205ae6",
+                "operationId": "7794e97e62aa2ad4cd3e1fcc30817f6a",
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "header",
-                        "description": "Passar no parametro o ID da empresa'",
+                        "in": "path",
+                        "description": "ID do usuário a ser buscado",
                         "required": true,
                         "schema": {
-                            "type": "number",
-                            "example": "1"
+                            "type": "integer",
+                            "example": 1
                         }
                     }
                 ],
@@ -283,6 +283,128 @@
                                 }
                             }
                         }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/companys/{id}": {
+            "put": {
+                "tags": [
+                    "Rota de empresas que vai utilizar o sistema"
+                ],
+                "summary": "Altera dados do cadastro da empresa",
+                "operationId": "c2ea169c727cf8b1bbce7a3f17b7d307",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do usuário a ser buscado",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Credenciais do usuário",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "cpf_cnpj"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "PEPEU 09351223343"
+                                    },
+                                    "cpf_cnpj": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "41055038000149"
+                                    },
+                                    "name_fantasy": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "Pepeus Bar LTDA"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "Rua Antonio Mesias"
+                                    },
+                                    "number_addres": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "10"
+                                    },
+                                    "district_addres": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "CENTRO"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "Terr Rica"
+                                    },
+                                    "state": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "PR"
+                                    },
+                                    "cep": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "87890-000"
+                                    },
+                                    "inscription_state": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "ISENTO"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "(44) 998212-815"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuário autenticado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Company updated successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
                     }
                 },
                 "security": [

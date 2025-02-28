@@ -164,18 +164,18 @@ class CompanyController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/companys/id",
+     *     path="/api/companys-status/{id}",
      *     tags={"Rota de empresas que vai utilizar o sistema"},
      *     summary="Alterar o status para Ativo ou Inativo",
      *          summary="Se a empresta estiver Ativa e receber essa requicição ela Desativa ou visse versa.",
      *       security={{"bearerAuth":{}}},
-     *      @OA\Parameter(
-     *  *         name="id",
-     *  *         in="header",
-     *  *         required=true,
-     *  *         description="Passar no parametro o ID da empresa'",
-     *  *         @OA\Schema(type="number", example="1")
-     *  *     ),
+     *     @OA\Parameter(
+     * * *         name="id",
+     * * *         in="path",
+     * * *         required=true,
+     * * *         description="ID do usuário a ser buscado",
+     * * *         @OA\Schema(type="integer", example=1)
+     * * *     ),
      *
      * @OA\Response(
      *
@@ -209,4 +209,82 @@ class CompanyController extends Controller
             'message' => 'Company updated successfully',
         ], 200);
     }
+
+
+    /**
+     * @OA\Put(
+     *     path="/api/companys/{id}",
+     *     tags={"Rota de empresas que vai utilizar o sistema"},
+     *     summary="Altera dados do cadastro da empresa",
+     *  security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     * *         name="id",
+     * *         in="path",
+     * *         required=true,
+     * *         description="ID do usuário a ser buscado",
+     * *         @OA\Schema(type="integer", example=1)
+     * *     ),
+     *
+     *     @OA\RequestBody(
+     *      description="Credenciais do usuário",
+     *
+    @OA\JsonContent(
+     *              required={"name", "cpf_cnpj"},
+     *              @OA\Property(property="name", type="string", format="text", example="PEPEU 09351223343"),
+     *              @OA\Property(property="cpf_cnpj", type="string", format="text", example="41055038000149"),
+     *              @OA\Property(property="name_fantasy", type="string", format="text", example="Pepeus Bar LTDA"),
+     *              @OA\Property(property="address", type="string", format="text", example="Rua Antonio Mesias"),
+     *              @OA\Property(property="number_addres", type="string", format="text", example="10"),
+     *              @OA\Property(property="district_addres", type="string", format="text", example="CENTRO"),
+     *              @OA\Property(property="city", type="string", format="text", example="Terr Rica"),
+     *              @OA\Property(property="state", type="string", format="text", example="PR"),
+     *              @OA\Property(property="cep", type="string", format="text", example="87890-000"),
+     *              @OA\Property(property="inscription_state", type="string", format="text", example="ISENTO"),
+     *              @OA\Property(property="phone", type="string", format="text", example="(44) 998212-815"),
+     *          )
+     *      ),
+     * @OA\Response(
+     *          response=200,
+     *          description="Usuário autenticado com sucesso",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="success", type="boolean", example="true"),
+     *              @OA\Property(property="message", type="string", example="Company updated successfully"),
+     *
+     *          )
+     *      ),
+     * @OA\Response(
+     *         response=401,
+     *         description="Credenciais inválidas"
+     *     )
+     * )
+     */
+    public function update(Request $request, Company $company): JsonResponse
+    {
+        $user = Auth::user();
+        if ($user->type_user === "FULL") {
+            $company->update([
+                'name' => $request->name,
+                'cpf_cnpj' => $request->cpf_cnpj,
+                'name_fantasy' => $request->name_fantasy,
+                'address' => $request->address,
+                'number_addres' => $request->number_addres,
+                'district_addres' => $request->district_addres,
+                'city' => $request->city,
+                'state' => $request->state,
+                'cep' => $request->cep,
+                'inscription_state' => $request->inscription_state,
+                'phone' => $request->phone,
+            ]);
+            return response()->json([
+                'success' => true,
+                'message' => 'Company updated successfully',
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => "You don't have permission to access this page",
+            ], 401);
+        }
+    }
 }
+
