@@ -14,9 +14,19 @@
                 "tags": [
                     "Rota de empresas que vai utilizar o sistema"
                 ],
-                "summary": "Realiza o logout do usuario logado atravez do token de autenticação",
+                "summary": "Lista Todas empresas Cadastrada",
                 "operationId": "00db5b4605d1f7d690dd78c799cd0800",
                 "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Token Laravel para autenticação. Deve ser enviado no formato 'Bearer {token}'",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJhbGciOiJIUzI1N..."
+                        }
+                    },
                     {
                         "name": "status",
                         "in": "header",
@@ -121,6 +131,18 @@
                 ],
                 "summary": "Cadastro de empresas",
                 "operationId": "0ae59365e605aa52e0ed1569ccca8c92",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Token Laravel para autenticação. Deve ser enviado no formato 'Bearer {token}'",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJhbGciOiJIUzI1N..."
+                        }
+                    }
+                ],
                 "requestBody": {
                     "description": "Credenciais do usuário",
                     "content": {
@@ -230,6 +252,42 @@
                     },
                     "401": {
                         "description": "Credenciais inválidas"
+                    }
+                }
+            }
+        },
+        "/api/companys/id": {
+            "put": {
+                "tags": [
+                    "Rota de empresas que vai utilizar o sistema"
+                ],
+                "summary": "Se a empresta etivar Ativa e receber essa requicição ela Destavia ou visse versa.",
+                "operationId": "cbe3730cbf753dc963c6dc855f205ae6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "header",
+                        "description": "Passar no parametro o ID da empresa'",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": "1"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Passar o token'",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJhbGciOiJIUzI1N..."
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Company updated successfully"
                     }
                 }
             }
@@ -349,6 +407,13 @@
                         "description": "Credenciais inválidas"
                     }
                 }
+            }
+        }
+    },
+    "components": {
+        "responses": {
+            "401": {
+                "description": "Credenciais inválidas"
             }
         }
     },

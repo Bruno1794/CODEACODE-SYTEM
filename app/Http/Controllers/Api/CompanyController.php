@@ -21,6 +21,13 @@ class CompanyController extends Controller
      *     path="/api/companys",
      *     tags={"Rota de empresas que vai utilizar o sistema"},
      *     summary="Cadastro de empresas",
+     *          @OA\Parameter(
+     *  *         name="Authorization",
+     *  *         in="header",
+     *  *         required=true,
+     *  *         description="Token Laravel para autenticação. Deve ser enviado no formato 'Bearer {token}'",
+     *  *         @OA\Schema(type="string", example="Bearer eyJhbGciOiJIUzI1N...")
+     *  *     ),
      *     @OA\RequestBody(
      *      description="Credenciais do usuário",
      *
@@ -57,7 +64,6 @@ class CompanyController extends Controller
      *     )
      * )
      */
-
     public function post(Request $request): JsonResponse
     {
         DB::beginTransaction();
@@ -105,7 +111,14 @@ class CompanyController extends Controller
      *     path="/api/companys",
      *     tags={"Rota de empresas que vai utilizar o sistema"},
      *     summary="Listar todas empresas",
-     *          summary="Realiza o logout do usuario logado atravez do token de autenticação",
+     *          summary="Lista Todas empresas Cadastrada",
+     *          @OA\Parameter(
+     *  *         name="Authorization",
+     *  *         in="header",
+     *  *         required=true,
+     *  *         description="Token Laravel para autenticação. Deve ser enviado no formato 'Bearer {token}'",
+     *  *         @OA\Schema(type="string", example="Bearer eyJhbGciOiJIUzI1N...")
+     *  *     ),
      *      @OA\Parameter(
      *  *         name="status",
      *  *         in="header",
@@ -153,5 +166,52 @@ class CompanyController extends Controller
             'success' => true,
             'companey' => $companey,
         ], 200);
+    }
+
+    /**
+     * @OA\Put(
+     *     path="/api/companys/id",
+     *     tags={"Rota de empresas que vai utilizar o sistema"},
+     *     summary="Alterar o status para Ativo ou Inativo",
+     *          summary="Se a empresta etivar Ativa e receber essa requicição ela Desativa ou visse versa.",
+     *      @OA\Parameter(
+     *  *         name="id",
+     *  *         in="header",
+     *  *         required=true,
+     *  *         description="Passar no parametro o ID da empresa'",
+     *  *         @OA\Schema(type="number", example="1")
+     *  *     ),
+     *           @OA\Parameter(
+     *   *         name="Authorization",
+     *   *         in="header",
+     *   *         required=true,
+     *   *         description="Passar o token'",
+     *   *         @OA\Schema(type="string", example="Bearer eyJhbGciOiJIUzI1N...")
+     *   *     ),
+     *
+     * @OA\Response(
+     *          response=200,
+     *          description="Company updated successfully",
+     *
+     *          )
+     *      ),
+     * @OA\Response(
+     *         response=401,
+     *         description="Credenciais inválidas"
+     *     )
+     * )
+     */
+    public function updateStatus(Company $company)
+    {
+        if (Auth::check()) {
+            $company->update([
+                'status' => $company->status ? 0 : 1
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Company updated successfully',
+        ],200);
     }
 }
