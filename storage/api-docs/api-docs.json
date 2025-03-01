@@ -127,7 +127,7 @@
                 "summary": "Cadastro de empresas",
                 "operationId": "0ae59365e605aa52e0ed1569ccca8c92",
                 "requestBody": {
-                    "description": "Credenciais do usuário",
+                    "description": "Regime tributario:\n     * 1 = Simples Nacional, 2 = Simples Nacional - Excesso de Sublimite, 3 = Regime Normal'",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -191,6 +191,11 @@
                                         "format": "text",
                                         "example": "(44) 998212-815"
                                     },
+                                    "regime_tributário": {
+                                        "type": "integer",
+                                        "format": "text",
+                                        "example": "(44) 998212-815"
+                                    },
                                     "name_user": {
                                         "type": "string",
                                         "format": "text",
@@ -214,7 +219,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Usuário autenticado com sucesso",
+                        "description": "Salvo empresa com sucesso",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -245,12 +250,12 @@
             }
         },
         "/api/companys-users/{id}": {
-            "put": {
+            "get": {
                 "tags": [
                     "Rota de empresas que vai utilizar o sistema"
                 ],
                 "summary": "Busca todos os usuarios referente a empresa passado pelo id",
-                "operationId": "db370567067f8287df20412e31ecaf32",
+                "operationId": "0d85ebde9d86373d46e49c281ed9d751",
                 "parameters": [
                     {
                         "name": "id",
@@ -309,7 +314,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Usuário autenticado com sucesso",
+                        "description": "Listando empresa",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -479,7 +484,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Usuário autenticado com sucesso",
+                        "description": "Empresa Atualizada",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -491,6 +496,74 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Company updated successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/companys-renew/{id}": {
+            "put": {
+                "tags": [
+                    "Rota de empresas que vai utilizar o sistema"
+                ],
+                "summary": "Renovar empresa",
+                "operationId": "82887b8dcdd0b7229000aafec3209252",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da empresa",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Credenciais do usuário",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "mes": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuário renovado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Company renew successfully"
                                         }
                                     },
                                     "type": "object"

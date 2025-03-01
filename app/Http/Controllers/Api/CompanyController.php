@@ -23,7 +23,8 @@ class CompanyController extends Controller
      *     summary="Cadastro de empresas",
      *  security={{"bearerAuth":{}}},
      *     @OA\RequestBody(
-     *      description="Credenciais do usuário",
+     *      description="Regime tributario:
+     * 1 = Simples Nacional, 2 = Simples Nacional - Excesso de Sublimite, 3 = Regime Normal'",
      *
     @OA\JsonContent(
      *              required={"name", "cpf_cnpj"},
@@ -38,6 +39,7 @@ class CompanyController extends Controller
      *              @OA\Property(property="cep", type="string", format="text", example="87890-000"),
      *              @OA\Property(property="inscription_state", type="string", format="text", example="ISENTO"),
      *              @OA\Property(property="phone", type="string", format="text", example="(44) 998212-815"),
+     *              @OA\Property(property="regime_tributário", type="integer", format="text", example="(44) 998212-815"),
      *              @OA\Property(property="name_user", type="string", format="text", example="bruno Costa"),
      *              @OA\Property(property="username", type="string", format="text", example="bruno2525"),
      *              @OA\Property(property="password", type="string", format="password", example="2020"),
@@ -45,7 +47,7 @@ class CompanyController extends Controller
      *      ),
      * @OA\Response(
      *          response=200,
-     *          description="Usuário autenticado com sucesso",
+     *          description="Salvo empresa com sucesso",
      *          @OA\JsonContent(
      *              @OA\Property(property="success", type="boolean", example="true"),
      *              @OA\Property(property="message", type="string", example="Company added successfully"),
@@ -74,6 +76,7 @@ class CompanyController extends Controller
                 'cep' => $request->cep,
                 'inscription_state' => $request->inscription_state,
                 'phone' => $request->phone,
+                'regime_tributário' => $request->regime_tributário,
                 'date_expiration' => Carbon::now()->addDays(30),
                 'user_id' => Auth::id(),
             ]);
@@ -193,7 +196,7 @@ class CompanyController extends Controller
      * *      ),
      * @OA\Response(
      *          response=200,
-     *          description="Usuário autenticado com sucesso",
+     *          description="Listando empresa",
      *          @OA\JsonContent(
      *              @OA\Property(property="success", type="boolean", example="true"),
      *              @OA\Property(property="message", type="string", example="Company updated successfully"),
@@ -222,7 +225,6 @@ class CompanyController extends Controller
             ], 401);
         }
     }
-
 
     /**
      * @OA\Put(
@@ -272,7 +274,6 @@ class CompanyController extends Controller
         ], 200);
     }
 
-
     /**
      * @OA\Put(
      *     path="/api/companys/{id}",
@@ -307,7 +308,7 @@ class CompanyController extends Controller
      *      ),
      * @OA\Response(
      *          response=200,
-     *          description="Usuário autenticado com sucesso",
+     *          description="Empresa Atualizada",
      *          @OA\JsonContent(
      *              @OA\Property(property="success", type="boolean", example="true"),
      *              @OA\Property(property="message", type="string", example="Company updated successfully"),
@@ -336,6 +337,7 @@ class CompanyController extends Controller
                 'cep' => $request->cep,
                 'inscription_state' => $request->inscription_state,
                 'phone' => $request->phone,
+                'regime_tributário' => $request->regime_tributário,
             ]);
             return response()->json([
                 'success' => true,
@@ -347,6 +349,59 @@ class CompanyController extends Controller
                 'message' => "You don't have permission to access this page",
             ], 401);
         }
+    }
+
+    /**
+     * @OA\Put(
+     *     path="/api/companys-renew/{id}",
+     *     tags={"Rota de empresas que vai utilizar o sistema"},
+     *     summary="Renovar empresa",
+     *  security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     * *         name="id",
+     * *         in="path",
+     * *         required=true,
+     * *         description="ID da empresa",
+     * *         @OA\Schema(type="integer", example=1)
+     * *     ),
+     *
+     *     @OA\RequestBody(
+     *      description="Credenciais do usuário",
+     *
+    @OA\JsonContent(
+     *
+     *              @OA\Property(property="mes", type="string", format="text", example="1"),
+
+     *          )
+     *      ),
+     * @OA\Response(
+     *          response=200,
+     *          description="Usuário renovado com sucesso",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="success", type="boolean", example="true"),
+     *              @OA\Property(property="message", type="string", example="Company renew successfully"),
+     *
+     *          )
+     *      ),
+     * @OA\Response(
+     *         response=401,
+     *         description="Credenciais inválidas"
+     *     )
+     * )
+     */
+    public function updateDataExpiration(Request $request, Company $company)
+    {
+
+        if (Auth::check()) {
+            $company->update([
+                'date_expiration' =>  Carbon::parse($company->date_expiration)->addMonths($request->mes)
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Company renew successfully',
+        ], 200);
     }
 
 

@@ -19,6 +19,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('companys-users/{company}', [CompanyController::class, 'indexUsers']);
     Route::put('companys/{company}', [CompanyController::class, 'update']);
     Route::put('companys-status/{company}', [CompanyController::class, 'updateStatus']);
+    Route::put('companys-renew/{company}', [CompanyController::class, 'updateDataExpiration']);
 
     ##Usuario
     Route::put('update-password/{user}',[UserController::class, 'updatePassword']);
