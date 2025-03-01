@@ -193,8 +193,8 @@
                                     },
                                     "regime_tributário": {
                                         "type": "integer",
-                                        "format": "text",
-                                        "example": "(44) 998212-815"
+                                        "format": "number",
+                                        "example": "1"
                                     },
                                     "name_user": {
                                         "type": "string",
@@ -475,6 +475,11 @@
                                         "type": "string",
                                         "format": "text",
                                         "example": "(44) 998212-815"
+                                    },
+                                    "regime_tributário": {
+                                        "type": "integer",
+                                        "format": "number",
+                                        "example": "1"
                                     }
                                 },
                                 "type": "object"

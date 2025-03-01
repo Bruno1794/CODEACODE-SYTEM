@@ -39,7 +39,7 @@ class CompanyController extends Controller
      *              @OA\Property(property="cep", type="string", format="text", example="87890-000"),
      *              @OA\Property(property="inscription_state", type="string", format="text", example="ISENTO"),
      *              @OA\Property(property="phone", type="string", format="text", example="(44) 998212-815"),
-     *              @OA\Property(property="regime_tributário", type="integer", format="text", example="(44) 998212-815"),
+     *              @OA\Property(property="regime_tributário", type="integer", format="number", example="1"),
      *              @OA\Property(property="name_user", type="string", format="text", example="bruno Costa"),
      *              @OA\Property(property="username", type="string", format="text", example="bruno2525"),
      *              @OA\Property(property="password", type="string", format="password", example="2020"),
@@ -304,7 +304,7 @@ class CompanyController extends Controller
      *              @OA\Property(property="cep", type="string", format="text", example="87890-000"),
      *              @OA\Property(property="inscription_state", type="string", format="text", example="ISENTO"),
      *              @OA\Property(property="phone", type="string", format="text", example="(44) 998212-815"),
-     *          )
+     *               @OA\Property(property="regime_tributário", type="integer", format="number", example="1"),          )
      *      ),
      * @OA\Response(
      *          response=200,
@@ -371,7 +371,6 @@ class CompanyController extends Controller
     @OA\JsonContent(
      *
      *              @OA\Property(property="mes", type="string", format="text", example="1"),
-
      *          )
      *      ),
      * @OA\Response(
@@ -391,10 +390,9 @@ class CompanyController extends Controller
      */
     public function updateDataExpiration(Request $request, Company $company)
     {
-
         if (Auth::check()) {
             $company->update([
-                'date_expiration' =>  Carbon::parse($company->date_expiration)->addMonths($request->mes)
+                'date_expiration' => Carbon::parse($company->date_expiration)->addMonths($request->mes)
             ]);
         }
 
