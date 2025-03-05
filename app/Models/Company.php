@@ -9,6 +9,7 @@ class Company extends Model
     //
     protected $table = 'companys';
     protected $fillable = [
+        'id_nf',
         'name',
         'cpf_cnpj',
         'name_fantasy',

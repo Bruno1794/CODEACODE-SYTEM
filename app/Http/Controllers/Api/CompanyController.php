@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Company;
+use App\Models\SettingNf;
 use App\Models\User;
+use App\Services\ApiFocusNfeService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,7 +17,14 @@ use Mockery\Exception;
 
 class CompanyController extends Controller
 {
+    protected ApiFocusNfeService $apiService;
+
+    public function __construct(ApiFocusNfeService $apiService)
+    {
+        $this->apiService = $apiService;
+    }
     //
+
     /**
      * @OA\Post(
      *     path="/api/companys",
@@ -64,31 +73,74 @@ class CompanyController extends Controller
     {
         DB::beginTransaction();
         try {
-            $company = Company::create([
-                'name' => $request->name,
-                'cpf_cnpj' => $request->cpf_cnpj,
-                'name_fantasy' => $request->name_fantasy,
-                'address' => $request->address,
-                'number_addres' => $request->number_addres,
-                'district_addres' => $request->district_addres,
-                'city' => $request->city,
-                'state' => $request->state,
+            $data = [
+                'nome' => $request->nome,
+                'nome_fantasia' => $request->nome_fantasia,
+                'inscricao_estadual' => $request->inscricao_estadual,
+                'inscricao_municipal' => $request->inscricao_municipal,
+                'cnpj' => $request->cnpj,
+                'regime_tributario' => $request->regime_tributario,
+                'email' => $request->email,
+                'telefone' => $request->telefone,
+                'logradouro' => $request->logradouro,
+                'numero' => $request->numero,
+                'complemento' => $request->complemento,
+                'bairro' => $request->bairro,
                 'cep' => $request->cep,
-                'inscription_state' => $request->inscription_state,
-                'phone' => $request->phone,
-                'regime_tributário' => $request->regime_tributário,
-                'date_expiration' => Carbon::now()->addDays(30),
-                'user_id' => Auth::id(),
-            ]);
+                'municipio' => $request->municipio,
+                'uf' => $request->uf,
 
-            User::create([
-                'name' => $request->name,
-                'username' => $request->username,
-                'type_user' => "ADMIN",
-                'company_id' => $company->id,
-                'password' => Hash::make($request->password, ['rounds' => 12]),
-            ]);
+            ];
+            $dados = $this->apiService->post($data);
 
+            if ($dados) {
+                $company = Company::create([
+                    'id_nf' => $dados['id'],
+                    'name' => $dados['nome'],
+                    'cpf_cnpj' => $dados['cnpj'],
+                    'name_fantasy' => $dados['nome_fantasia'],
+                    'address' => $dados['logradouro'],
+                    'number_addres' => $dados['numero'],
+                    'district_addres' => $dados['bairro'],
+                    'city' => $dados['municipio'],
+                    'state' => $dados['uf'],
+                    'cep' => $dados['cep'],
+                    'inscription_state' =>$dados['inscricao_estadual'] ? $dados['inscricao_estadual'] : "ISENTO",
+                    'phone' => $dados['telefone'],
+                    'regime_tributário' => $dados['regime_tributario'],
+                    'date_expiration' => Carbon::now()->addDays(30),
+                    'user_id' => Auth::id(),
+                ]);
+                User::create([
+                    'name' => $request->name,
+                    'username' => $request->username,
+                    'type_user' => "ADMIN",
+                    'company_id' => $company->id,
+                    'password' => Hash::make($request->password, ['rounds' => 12]),
+                ]);
+
+                SettingNf::create([
+                    'cpf_cnpj_contabilidade' => $dados['cpf_cnpj_contabilidade'],
+                    'habilita_nfe' => $dados['habilita_nfe'],
+                    'habilita_nfce' => $dados['habilita_nfce'],
+                    'exibe_impostos_adicionais_danfe' => $dados['exibe_impostos_adicionais_danfe'],
+                    'exibe_unidade_tributaria_danfe' => $dados['exibe_unidade_tributaria_danfe'],
+                    'exibe_sempre_volumes_danfe' => $dados['exibe_sempre_volumes_danfe'],
+                    'enviar_email_destinatario' => $dados['enviar_email_destinatario'],
+                    'discrimina_impostos' => $dados['discrimina_impostos'],
+                    'csc_nfce_producao' => $dados['csc_nfce_producao'],
+                    'id_token_nfce_producao' => $dados['id_token_nfce_producao'],
+                    'csc_nfce_homologacao' => $dados['csc_nfce_homologacao'],
+                    'id_token_nfce_homologacao' => $dados['id_token_nfce_homologacao'],
+                    'proximo_numero_nfe_producao' => $dados['proximo_numero_nfe_producao'],
+                    'proximo_numero_nfe_homologacao' => $dados['proximo_numero_nfe_homologacao'],
+                    'serie_nfe_producao' => $dados['serie_nfe_producao'],
+                    'serie_nfe_homologacao' => $dados['serie_nfe_homologacao'],
+                    'serie_nfce_producao' => $dados['serie_nfce_producao'],
+                    'serie_nfce_homologacao' => $dados['serie_nfce_homologacao'],
+                    'company_id' => $company->id,
+                ]);
+            }
             DB::commit();
             return response()->json([
                 'success' => true,

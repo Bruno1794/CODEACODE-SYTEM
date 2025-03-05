@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\Api\CompanyController;
+use App\Http\Controllers\Api\SettingController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\LoginController;
@@ -23,5 +24,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     ##Usuario
     Route::put('update-password/{user}',[UserController::class, 'updatePassword']);
+
+    ##Setting
+    Route::put('settings/{settingNf}',[SettingController::class, 'update']);
 
 });
