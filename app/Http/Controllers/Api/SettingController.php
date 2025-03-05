@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\SettingNf;
 use App\Services\ApiFocusNfeService;
+use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -16,10 +17,76 @@ class SettingController extends Controller
         $this->apiService = $apiService;
     }
 
+
+    /**
+     * @OA\Get(
+     *     path="/api/settings",
+     *     tags={"Rota para de configuração da NFe"},
+     *     summary="Lista de configurações da empresa",
+     *
+     *  security={{"bearerAuth":{}}},
+     *      @OA\Parameter(
+     *  *         name="id",
+     *  *         in="header",
+     *  *         required=false,
+     *  *         description="So informar ID se nivel do usuario for FULL'",
+     *  *         @OA\Schema(type="string", example="7")
+     *  *     ),
+     *
+     * @OA\Response(
+     *          response=200,
+     *          description="Lista da empresa cadastrada",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="success", type="boolean", example="true"),
+     *              @OA\Property(property="settigs", type="object",
+    @OA\Property(property="cpf_cnpj_contabilidade", type="string", format="text", example="09351223343"),
+     * *               @OA\Property(property="habilita_nfe", type="boolean", format="boolean", example="0"),
+     * *               @OA\Property(property="habilita_nfce", type="boolean", format="boolean", example="0"),
+     * *               @OA\Property(property="exibe_impostos_adicionais_danfe", type="boolean", format="boolean", example="0"),
+     * *               @OA\Property(property="exibe_unidade_tributaria_danfe", type="boolean", format="boolean", example="0"),
+     * *               @OA\Property(property="exibe_sempre_volumes_danfe", type="boolean", format="boolean", example="0"),
+     * *               @OA\Property(property="enviar_email_destinatario", type="boolean", format="boolean", example="0"),
+     * *               @OA\Property(property="discrimina_impostos", type="boolean", format="boolean", example="0"),
+     * *               @OA\Property(property="csc_nfce_producao", type="boolean", format="boolean", example="0"),
+     * *               @OA\Property(property="id_token_nfce_producao", type="boolean", format="boolean", example="0"),
+     * *               @OA\Property(property="csc_nfce_homologacao", type="boolean", format="boolean", example="0"),
+     * *               @OA\Property(property="id_token_nfce_homologacao", type="text", format="text", example="1243243##$"),
+     * *               @OA\Property(property="proximo_numero_nfe_producao", type="integer", format="integer", example="1234"),
+     * *               @OA\Property(property="proximo_numero_nfe_homologacao", type="integer", format="integer", example="1234"),
+     * *               @OA\Property(property="serie_nfe_producao", type="integer", format="integer", example="1"),
+     * *               @OA\Property(property="serie_nfe_homologacao", type="integer", format="integer", example="1"),
+     * *               @OA\Property(property="serie_nfce_producao", type="integer", format="integer", example="1"),
+     * *               @OA\Property(property="serie_nfce_homologacao", type="integer", format="integer", example="1"),
+     * )
+     *
+     *          )
+     *      ),
+     * @OA\Response(
+     *         response=401,
+     *         description="Credenciais inválidas"
+     *     )
+     * )
+     */
+    public function show(Request $request): JsonResponse
+    {
+        $userLogado = auth()->user();
+        if ($userLogado->type_user === "FULL") {
+            $settigs = SettingNf::where('company_id', $request->id)->first();
+        } else {
+            $settigs = SettingNf::where('company_id', $userLogado->company_id)->first();
+        }
+
+
+        return response()->json([
+            'success' => true,
+            'settigs' => $settigs,
+        ], 200);
+    }
+
     /**
      * @OA\Put(
      *     path="/api/settings/{id}",
-     *     tags={"Rota de empresas que vai utilizar o sistema"},
+     *     tags={"Rota para de configuração da NFe"},
      *     summary="Alterar Dados das configuração de emissao",
      *  security={{"bearerAuth":{}}},
      *     @OA\Parameter(
@@ -31,7 +98,6 @@ class SettingController extends Controller
      * *     ),
      *
      *     @OA\RequestBody(
-
      *
     @OA\JsonContent(
      *              required={"name", "cpf_cnpj"},

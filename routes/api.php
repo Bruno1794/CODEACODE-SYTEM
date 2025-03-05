@@ -26,6 +26,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('update-password/{user}',[UserController::class, 'updatePassword']);
 
     ##Setting
+    Route::get('settings',[SettingController::class, 'show']);
     Route::put('settings/{settingNf}',[SettingController::class, 'update']);
 
 });

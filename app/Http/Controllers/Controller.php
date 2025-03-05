@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 /**
  * @OA\Info(
  *      version="1.0.0",
@@ -22,6 +23,10 @@ namespace App\Http\Controllers;
  *            name="Rota para de gerenciar usuario",
  *            description="Endpoints relacionados a usuarios (FULL)"
  *        ),
+ * @OA\Tag(
+ * name="Rota para de configuração da NFe",
+ * description="Endpoints relacionados a configuração da NFe"
+ * ),
  * @OA\SecurityScheme(
  *          securityScheme="bearerAuth",
  *          type="http",
