@@ -94,7 +94,7 @@ class CompanyController extends Controller
 
             ];
             $dados = $this->apiService->post($data);
-            dd($dados);
+
 
             if ($dados) {
                 $company = Company::create([
