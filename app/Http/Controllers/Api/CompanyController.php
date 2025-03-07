@@ -37,21 +37,23 @@ class CompanyController extends Controller
      *
     @OA\JsonContent(
      *              required={"name", "cpf_cnpj"},
-     *              @OA\Property(property="name", type="string", format="text", example="PEPEU 09351223343"),
-     *              @OA\Property(property="cpf_cnpj", type="string", format="text", example="41055038000149"),
-     *              @OA\Property(property="name_fantasy", type="string", format="text", example="Pepeus Bar LTDA"),
-     *              @OA\Property(property="address", type="string", format="text", example="Rua Antonio Mesias"),
-     *              @OA\Property(property="number_addres", type="string", format="text", example="10"),
-     *              @OA\Property(property="district_addres", type="string", format="text", example="CENTRO"),
-     *              @OA\Property(property="city", type="string", format="text", example="Terr Rica"),
-     *              @OA\Property(property="state", type="string", format="text", example="PR"),
-     *              @OA\Property(property="cep", type="string", format="text", example="87890-000"),
-     *              @OA\Property(property="inscription_state", type="string", format="text", example="ISENTO"),
-     *              @OA\Property(property="phone", type="string", format="text", example="(44) 998212-815"),
-     *              @OA\Property(property="regime_tributário", type="integer", format="number", example="1"),
-     *              @OA\Property(property="name_user", type="string", format="text", example="bruno Costa"),
-     *              @OA\Property(property="username", type="string", format="text", example="bruno2525"),
-     *              @OA\Property(property="password", type="string", format="password", example="2020"),
+     *              @OA\Property(property="nome", type="string", format="text", example="PEPEU 09351223343"),
+     * *              @OA\Property(property="nome_fantasia", type="string", format="text", example="Pepeus Bar LTDA"),
+     * *              @OA\Property(property="inscricao_estadual", type="string", format="text", example="Isento"),
+     * *              @OA\Property(property="cnpj", type="string", format="text", example="123232434343"),
+     * *              @OA\Property(property="regime_tributario", type="integer", format="integer", example="1"),
+     * *              @OA\Property(property="email", type="string", format="email", example="bruno@gmail.com"),
+     * *              @OA\Property(property="telefone", type="string", format="text", example="44998212815"),
+     * *              @OA\Property(property="logradouro", type="string", format="text", example="Rua Acre"),
+     * *              @OA\Property(property="numero", type="string", format="text", example="1234"),
+     * *              @OA\Property(property="complemento", type="string", format="text", example="Casa"),
+     * *              @OA\Property(property="bairro", type="string", format="text", example="Centro"),
+     * *              @OA\Property(property="cep", type="string", format="text", example="87890000"),
+     * *              @OA\Property(property="municipio", type="string", format="text", example="Terra Rica"),
+     * *              @OA\Property(property="uf", type="string", format="text", example="PR"),
+     * *              @OA\Property(property="name", type="string", format="text", example="Bruno Costa"),
+     * *              @OA\Property(property="username", type="string", format="text", example="bruno1020"),
+     * *              @OA\Property(property="password", type="string", format="password", example="2020"),
      *          )
      *      ),
      * @OA\Response(
@@ -92,6 +94,7 @@ class CompanyController extends Controller
 
             ];
             $dados = $this->apiService->post($data);
+            dd($dados);
 
             if ($dados) {
                 $company = Company::create([
