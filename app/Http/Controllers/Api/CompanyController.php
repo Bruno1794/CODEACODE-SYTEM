@@ -147,7 +147,7 @@ class CompanyController extends Controller
             DB::commit();
             return response()->json([
                 'success' => true,
-                'message' => 'Company added successfully',
+                'message' => 'Empresa salva com sucesso',
             ], 200);
         } catch (Exception $exception) {
             return response()->json([
@@ -215,7 +215,7 @@ class CompanyController extends Controller
         } else {
             return response()->json([
                 'success' => false,
-                'message' => "You don't have permission to access this page",
+                'message' => "Você não tem permissão para acessar esta página",
             ], 400);
         }
     }
@@ -276,7 +276,7 @@ class CompanyController extends Controller
         } else {
             return response()->json([
                 'success' => false,
-                'message' => "You don't have permission to access this page",
+                'message' => "Você não tem permissão para acessar esta página",
             ], 401);
         }
     }
@@ -416,12 +416,12 @@ class CompanyController extends Controller
             ]);
             return response()->json([
                 'success' => true,
-                'message' => 'Company updated successfully',
+                'message' => 'Empresa atualizda com sucesso',
             ], 200);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => "You don't have permission to access this page",
+                'message' => "Você não tem permissão para acessar esta página",
             ], 401);
         }
     }
@@ -473,7 +473,7 @@ class CompanyController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Company renew successfully',
+            'message' => 'Renovado com sucesso',
         ], 200);
     }
 

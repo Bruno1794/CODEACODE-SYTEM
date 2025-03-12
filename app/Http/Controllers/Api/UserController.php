@@ -63,12 +63,12 @@ class UserController extends Controller
 
             return response()->json([
                 "success" => true,
-                "message" => "Password changed successfully!"
+                "message" => "Senha alterada com sucesso!"
             ], 200);
         } else {
             return response()->json([
                 "success" => false,
-                "message" => "You don't have permission to change password!"
+                "message" => "Você não tem permissão para alterar a senha!"
             ], 401);
         }
     }
