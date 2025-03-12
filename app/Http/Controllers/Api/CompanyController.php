@@ -347,19 +347,18 @@ class CompanyController extends Controller
      *      description="Credenciais do usuário",
      *
     @OA\JsonContent(
-     *              required={"name", "cpf_cnpj"},
-     *              @OA\Property(property="name", type="string", format="text", example="PEPEU 09351223343"),
-     *              @OA\Property(property="cpf_cnpj", type="string", format="text", example="41055038000149"),
-     *              @OA\Property(property="name_fantasy", type="string", format="text", example="Pepeus Bar LTDA"),
-     *              @OA\Property(property="address", type="string", format="text", example="Rua Antonio Mesias"),
-     *              @OA\Property(property="number_addres", type="string", format="text", example="10"),
-     *              @OA\Property(property="district_addres", type="string", format="text", example="CENTRO"),
-     *              @OA\Property(property="city", type="string", format="text", example="Terr Rica"),
-     *              @OA\Property(property="state", type="string", format="text", example="PR"),
+     *              required={"nome", "cnpj"},
+     *              @OA\Property(property="nome", type="string", format="text", example="PEPEU 09351223343"),
+     *              @OA\Property(property="nome_fantasia", type="string", format="text", example="Pepeus Bar LTDA"),
+     *              @OA\Property(property="logradouro", type="string", format="text", example="Rua Antonio Mesias"),
+     *              @OA\Property(property="numero", type="string", format="text", example="10"),
+     *              @OA\Property(property="bairro", type="string", format="text", example="CENTRO"),
+     *              @OA\Property(property="municipio", type="string", format="text", example="Terr Rica"),
+     *              @OA\Property(property="uf", type="string", format="text", example="PR"),
      *              @OA\Property(property="cep", type="string", format="text", example="87890-000"),
-     *              @OA\Property(property="inscription_state", type="string", format="text", example="ISENTO"),
-     *              @OA\Property(property="phone", type="string", format="text", example="(44) 998212-815"),
-     *               @OA\Property(property="regime_tributário", type="integer", format="number", example="1"),          )
+     *              @OA\Property(property="inscricao_estadual", type="string", format="text", example="ISENTO"),
+     *              @OA\Property(property="telefone", type="string", format="text", example="(44) 998212-815"),
+     *               @OA\Property(property="regime_tributario", type="integer", format="number", example="1"),          )
      *      ),
      * @OA\Response(
      *          response=200,
@@ -378,21 +377,42 @@ class CompanyController extends Controller
      */
     public function update(Request $request, Company $company): JsonResponse
     {
+
+
         $user = Auth::user();
         if ($user->type_user === "FULL") {
-            $company->update([
-                'name' => $request->name,
-                'cpf_cnpj' => $request->cpf_cnpj,
-                'name_fantasy' => $request->name_fantasy,
-                'address' => $request->address,
-                'number_addres' => $request->number_addres,
-                'district_addres' => $request->district_addres,
-                'city' => $request->city,
-                'state' => $request->state,
+
+            $data = [
+                'nome' => $request->nome,
+                'nome_fantasia' => $request->nome_fantasia,
+                'inscricao_estadual' => $request->inscricao_estadual,
+                'inscricao_municipal' => $request->inscricao_municipal,
+                'regime_tributario' => $request->regime_tributario,
+                'email' => $request->email,
+                'telefone' => $request->telefone,
+                'logradouro' => $request->logradouro,
+                'numero' => $request->numero,
+                'complemento' => $request->complemento,
+                'bairro' => $request->bairro,
                 'cep' => $request->cep,
-                'inscription_state' => $request->inscription_state,
-                'phone' => $request->phone,
-                'regime_tributário' => $request->regime_tributário,
+                'municipio' => $request->municipio,
+                'uf' => $request->uf,
+            ];
+          $dados = $this->apiService->put($company->id_nf, $data);
+
+
+            $company->update([
+                'name' => $dados['nome'],
+                'name_fantasy' => $dados['nome_fantasia'],
+                'address' => $dados['logradouro'],
+                'number_addres' => $dados['numero'],
+                'district_addres' => $dados['bairro'],
+                'city' => $dados['municipio'],
+                'state' =>$dados['uf'],
+                'cep' => $dados['cep'],
+                'inscription_state' =>$dados['inscricao_estadual'] ? $dados['inscricao_estadual'] : "ISENTO",
+                'phone' => $dados['telefone'],
+                'regime_tributário' => $dados['regime_tributario'],
             ]);
             return response()->json([
                 'success' => true,

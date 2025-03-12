@@ -427,46 +427,41 @@
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "name",
-                                    "cpf_cnpj"
+                                    "nome",
+                                    "cnpj"
                                 ],
                                 "properties": {
-                                    "name": {
+                                    "nome": {
                                         "type": "string",
                                         "format": "text",
                                         "example": "PEPEU 09351223343"
                                     },
-                                    "cpf_cnpj": {
-                                        "type": "string",
-                                        "format": "text",
-                                        "example": "41055038000149"
-                                    },
-                                    "name_fantasy": {
+                                    "nome_fantasia": {
                                         "type": "string",
                                         "format": "text",
                                         "example": "Pepeus Bar LTDA"
                                     },
-                                    "address": {
+                                    "logradouro": {
                                         "type": "string",
                                         "format": "text",
                                         "example": "Rua Antonio Mesias"
                                     },
-                                    "number_addres": {
+                                    "numero": {
                                         "type": "string",
                                         "format": "text",
                                         "example": "10"
                                     },
-                                    "district_addres": {
+                                    "bairro": {
                                         "type": "string",
                                         "format": "text",
                                         "example": "CENTRO"
                                     },
-                                    "city": {
+                                    "municipio": {
                                         "type": "string",
                                         "format": "text",
                                         "example": "Terr Rica"
                                     },
-                                    "state": {
+                                    "uf": {
                                         "type": "string",
                                         "format": "text",
                                         "example": "PR"
@@ -476,17 +471,17 @@
                                         "format": "text",
                                         "example": "87890-000"
                                     },
-                                    "inscription_state": {
+                                    "inscricao_estadual": {
                                         "type": "string",
                                         "format": "text",
                                         "example": "ISENTO"
                                     },
-                                    "phone": {
+                                    "telefone": {
                                         "type": "string",
                                         "format": "text",
                                         "example": "(44) 998212-815"
                                     },
-                                    "regime_tributário": {
+                                    "regime_tributario": {
                                         "type": "integer",
                                         "format": "number",
                                         "example": "1"
