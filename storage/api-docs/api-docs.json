@@ -550,8 +550,8 @@
                             "schema": {
                                 "properties": {
                                     "mes": {
-                                        "type": "string",
-                                        "format": "text",
+                                        "type": "integer",
+                                        "format": "integer",
                                         "example": "1"
                                     }
                                 },
@@ -573,7 +573,7 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "Company renew successfully"
+                                            "example": "Renovado com sucesso"
                                         }
                                     },
                                     "type": "object"

@@ -445,7 +445,7 @@ class CompanyController extends Controller
      *
     @OA\JsonContent(
      *
-     *              @OA\Property(property="mes", type="string", format="text", example="1"),
+     *              @OA\Property(property="mes", type="integer", format="integer", example="1"),
      *          )
      *      ),
      * @OA\Response(
@@ -453,7 +453,7 @@ class CompanyController extends Controller
      *          description="Usuário renovado com sucesso",
      *          @OA\JsonContent(
      *              @OA\Property(property="success", type="boolean", example="true"),
-     *              @OA\Property(property="message", type="string", example="Company renew successfully"),
+     *              @OA\Property(property="message", type="string", example="Renovado com sucesso"),
      *
      *          )
      *      ),
