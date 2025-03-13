@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\Api\CertificateController;
 use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\SettingController;
 use App\Http\Controllers\Api\UserController;
@@ -28,5 +29,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     ##Setting
     Route::get('settings',[SettingController::class, 'show']);
     Route::put('settings/{settingNf}',[SettingController::class, 'update']);
+
+    ##Certificado
+    Route::post('certificates',[CertificateController::class, 'store']);
 
 });

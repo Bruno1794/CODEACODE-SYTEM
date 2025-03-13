@@ -26,7 +26,7 @@ return new class extends Migration {
             $table->string('phone');
             $table->date('date_expiration');
             $table->boolean('status')->default(1); // 0 Inativo e 1 ativo
-            $table->integer('regime_tributário')->default(1); // 1 = Simples Nacional, 2 = Simples Nacional - Excesso de Sublimite, 3 = Regime Normal'
+            $table->integer('regime_tributario')->default(1); // 1 = Simples Nacional, 2 = Simples Nacional - Excesso de Sublimite, 3 = Regime Normal'
             $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });

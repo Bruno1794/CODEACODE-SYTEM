@@ -23,6 +23,7 @@ class Company extends Model
         'phone',
         'date_expiration',
         'status',
+        'regime_tributario',
         'user_id',
     ];
 }
