@@ -412,7 +412,7 @@ class CompanyController extends Controller
                 'cep' => $dados['cep'],
                 'inscription_state' =>$dados['inscricao_estadual'] ? $dados['inscricao_estadual'] : "ISENTO",
                 'phone' => $dados['telefone'],
-                'regime_tributário' => $dados['regime_tributario'],
+                'regime_tributario' => $dados['regime_tributario'],
             ]);
             return response()->json([
                 'success' => true,

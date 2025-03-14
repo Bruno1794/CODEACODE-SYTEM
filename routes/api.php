@@ -31,6 +31,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('settings/{settingNf}',[SettingController::class, 'update']);
 
     ##Certificado
-    Route::post('certificates',[CertificateController::class, 'store']);
+    Route::post('certificates/{company}',[CertificateController::class, 'store']);
 
 });
