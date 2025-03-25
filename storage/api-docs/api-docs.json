@@ -9,6 +9,78 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/certificates/{id}": {
+            "post": {
+                "tags": [
+                    "Rota para de importação do certificado"
+                ],
+                "summary": "Rota para de importação do certificado",
+                "description": "Este endpoint permite o upload de um arquivo e dados adicionais via multipart/form-data.",
+                "operationId": "uploadFile",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da empresa",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": [
+                    {
+                        "mediaType": "multipart/form-data",
+                        "schema": {
+                            "required": [
+                                "certificado",
+                                "senha"
+                            ],
+                            "properties": {
+                                "certificado": {
+                                    "description": "Arquivo a ser enviado",
+                                    "type": "string",
+                                    "format": "binary"
+                                },
+                                "senha": {
+                                    "description": "Senha do Certificado",
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Certificado Importado com seucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Certificado Salvo com suecesso!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/companys": {
             "get": {
                 "tags": [
@@ -1090,6 +1162,10 @@
         {
             "name": "Rota para de configuração da NFe",
             "description": "Endpoints relacionados a configuração da NFe"
+        },
+        {
+            "name": "Rota para de importação do certificado",
+            "description": "Endpoints relacionados a inportação do certificado"
         }
     ]
 }

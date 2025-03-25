@@ -27,6 +27,10 @@ namespace App\Http\Controllers;
  * name="Rota para de configuração da NFe",
  * description="Endpoints relacionados a configuração da NFe"
  * ),
+ * @OA\Tag(
+ * name="Rota para de importação do certificado",
+ * description="Endpoints relacionados a inportação do certificado"
+ * ),
  * @OA\SecurityScheme(
  *          securityScheme="bearerAuth",
  *          type="http",
@@ -34,7 +38,8 @@ namespace App\Http\Controllers;
  *          bearerFormat="JWT",
  *          description="Autenticação via Bearer Token"
  *      )
- *  )
+ *  ),
+ *
  */
 abstract class Controller
 {

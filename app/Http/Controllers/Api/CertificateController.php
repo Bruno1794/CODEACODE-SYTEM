@@ -5,73 +5,115 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Certificate;
 use App\Models\Company;
+use App\Services\ApiFocusNfeService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use phpseclib3\File\X509;
 
+
 class CertificateController extends Controller
 {
     //
+    public function __construct(ApiFocusNfeService $apiService)
+    {
+        $this->apiService = $apiService;
+    }
 
+    /**
+     * @OA\Post(
+     *     path="/api/certificates/{id}",
+     *     summary="Rota para de importação do certificado",
+     *     description="Este endpoint permite o upload de um arquivo e dados adicionais via multipart/form-data.",
+     *     operationId="uploadFile",
+     *     tags={"Rota para de importação do certificado"},
+    security={{"bearerAuth":{}}},
+    @OA\Parameter(
+     * *         name="id",
+     * *         in="path",
+     * *         required=true,
+     * *         description="ID da empresa",
+     * *         @OA\Schema(type="integer", example=1)
+     * *     ),
+     *     requestBody={
+     *       @OA\MediaType(
+     *         mediaType="multipart/form-data",
+     *         @OA\Schema(
+     *           type="object",
+     *           required={"certificado", "senha"},
+     *           @OA\Property(
+     *             property="certificado",
+     *             type="string",
+     *             format="binary",
+     *             description="Arquivo a ser enviado"
+     *           ),
+     *           @OA\Property(
+     *             property="senha",
+     *             type="string",
+     *             description="Senha do Certificado"
+     *           )
+     *         )
+     *       )
+     *     },
+     *     responses={
+     *       @OA\Response(
+     *         response=200,
+     *         description="Certificado Importado com seucesso",
+     *         @OA\JsonContent(
+     *           type="object",
+     *           @OA\Property(property="success", type="boolean", example="true"),
+     *           @OA\Property(property="message", type="string", example="Certificado Salvo com suecesso!"),
+     *
+     *         )
+     *       )
+     *     }
+     * )
+     */
     public function store(Request $request, Company $company): JsonResponse
     {
-        $arquivo = $request->file('certificado_');
-        $senha = $request->input('senha_certificado');
+        $userLogado = Auth::user();
 
+        $arquivoCertificado = base64_encode(file_get_contents($request->file('certificado')->getRealPath()));
+        $idFocus = Company::where('id', $company->id)->first();
 
-        // Tentando ler o certificado
-        try {
+        $data = [
+            "arquivo_certificado_base64" => $arquivoCertificado,
+            "senha_certificado" => $request->senha
+        ];
+        $dados = $this->apiService->put($idFocus->id_nf, $data);
 
-            $pkcs12 = file_get_contents($arquivo);
+        if (!isset($dados['codigo'])) {
+            $arquivo = $request->file('certificado');
+            $nomeArquivo = time() . '_' . $arquivo->getClientOriginalName();
+            $caminho = $arquivo->storeAs('certificados/'.$company->name, $nomeArquivo, 'local');
 
-
-            $certs = [];
-           openssl_pkcs12_read($pkcs12, $certs, $senha);
-
-
-
-           if (!isset($certs['cert'])) {
-                return response()->json(['error' => 'Certificado inválido ou senha incorreta'], 400);
-            }
-
-            $x509 = new X509();
-            $cert = $x509->loadX509($certs['cert']);
-
-            // Pegando a data de validade
-            $dataExpiracao = $cert['tbsCertificate']['validity']['notAfter']['utcTime'] ??
-                $cert['tbsCertificate']['validity']['notAfter']['generalTime'];
-
-
-            // Convertendo para formato Laravel
-            $dataExpiracaoFormatada = \Carbon\Carbon::createFromFormat('ymdHis\Z', $dataExpiracao)
-                ->format('Y-m-d H:i:s');
-
-            return response()->json([
-                'validade' => $dataExpiracaoFormatada
+            Certificate::create([
+                'nome_certificado' => $arquivo->getClientOriginalName(),
+                'arquivo_certificado' => $caminho,
+                'senha_certificado' => Hash::make($request->senha, ['rounds' => 12]),
+                'data_expiracao' => $dados['certificado_valido_ate'],
+                'company_id' => $userLogado->type_user === "FULL" ? $company->id : $userLogado->company_id,
             ]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Erro ao processar o certificado'], 500);
+            return response()->json([
+                'success' => true,
+                'message' => 'Certificado salvo com sucesso!'
+            ], 200);
+
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => $dados['erros'][0]['mensagem']
+            ]);
         }
 
-
-        /* $userLogado = Auth::user();
-         $arquivo = $request->file('certificado_');
-         $nomeArquivo = time() . '_' . $arquivo->getClientOriginalName();
-         $caminho = $arquivo->storeAs('certificados/'.$company->name, $nomeArquivo, 'local');
-
-         $arquivoCertificado = base64_encode(file_get_contents($request->file('certificado_')->getRealPath()));
-         dd($arquivoCertificado);
+        /*
+                 $arquivo = $request->file('certificado');
+                 $nomeArquivo = time() . '_' . $arquivo->getClientOriginalName();
+                 $caminho = $arquivo->storeAs('certificados/'.$company->name, $nomeArquivo, 'local');*/
 
 
-         Certificate::create([
-             'nome_certificado' => $arquivo->getClientOriginalName(),
-             'arquivo_certificado' => $caminho,
-             'senha_certificado' => Hash::make($request->senha, ['rounds' => 12]),
-             'data_expiracao' => $request->data_expiracao,
-             'company_id' => $userLogado->type_user === "FULL" ? $company->id : $userLogado->company_id,
-         ]);*/
-        // return response()->json(['message' => 'Certificado salvo com sucesso!'], 200);
+
     }
+
 }

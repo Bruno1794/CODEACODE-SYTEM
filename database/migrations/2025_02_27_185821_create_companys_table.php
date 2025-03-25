@@ -27,6 +27,8 @@ return new class extends Migration {
             $table->date('date_expiration');
             $table->boolean('status')->default(1); // 0 Inativo e 1 ativo
             $table->integer('regime_tributario')->default(1); // 1 = Simples Nacional, 2 = Simples Nacional - Excesso de Sublimite, 3 = Regime Normal'
+            $table->string('token_producao');
+            $table->string('token_homogacao');
             $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });

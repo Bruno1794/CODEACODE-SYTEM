@@ -108,10 +108,12 @@ class CompanyController extends Controller
                     'city' => $dados['municipio'],
                     'state' => $dados['uf'],
                     'cep' => $dados['cep'],
-                    'inscription_state' =>$dados['inscricao_estadual'] ? $dados['inscricao_estadual'] : "ISENTO",
+                    'inscription_state' => $dados['inscricao_estadual'] ? $dados['inscricao_estadual'] : "ISENTO",
                     'phone' => $dados['telefone'],
                     'regime_tributario' => $dados['regime_tributario'],
                     'date_expiration' => Carbon::now()->addDays(30),
+                    'token_producao' => $dados['token_producao'],
+                    'token_homologacao' => $dados['token_homologacao'],
                     'user_id' => Auth::id(),
                 ]);
                 User::create([
@@ -377,11 +379,8 @@ class CompanyController extends Controller
      */
     public function update(Request $request, Company $company): JsonResponse
     {
-
-
         $user = Auth::user();
         if ($user->type_user === "FULL") {
-
             $data = [
                 'nome' => $request->nome,
                 'nome_fantasia' => $request->nome_fantasia,
@@ -398,7 +397,7 @@ class CompanyController extends Controller
                 'municipio' => $request->municipio,
                 'uf' => $request->uf,
             ];
-          $dados = $this->apiService->put($company->id_nf, $data);
+            $dados = $this->apiService->put($company->id_nf, $data);
 
 
             $company->update([
@@ -408,9 +407,9 @@ class CompanyController extends Controller
                 'number_addres' => $dados['numero'],
                 'district_addres' => $dados['bairro'],
                 'city' => $dados['municipio'],
-                'state' =>$dados['uf'],
+                'state' => $dados['uf'],
                 'cep' => $dados['cep'],
-                'inscription_state' =>$dados['inscricao_estadual'] ? $dados['inscricao_estadual'] : "ISENTO",
+                'inscription_state' => $dados['inscricao_estadual'] ? $dados['inscricao_estadual'] : "ISENTO",
                 'phone' => $dados['telefone'],
                 'regime_tributario' => $dados['regime_tributario'],
             ]);
