@@ -95,7 +95,6 @@ class CompanyController extends Controller
             ];
             $dados = $this->apiService->post($data);
 
-
             if ($dados) {
                 $company = Company::create([
                     'id_nf' => $dados['id'],
@@ -113,7 +112,7 @@ class CompanyController extends Controller
                     'regime_tributario' => $dados['regime_tributario'],
                     'date_expiration' => Carbon::now()->addDays(30),
                     'token_producao' => $dados['token_producao'],
-                    'token_homologacao' => $dados['token_homologacao'],
+                    'token_homogacao' => $dados['token_homologacao'],
                     'user_id' => Auth::id(),
                 ]);
                 User::create([

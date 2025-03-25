@@ -24,6 +24,8 @@ class Company extends Model
         'date_expiration',
         'status',
         'regime_tributario',
+        'token_producao',
+        'token_homogacao',
         'user_id',
     ];
 }
