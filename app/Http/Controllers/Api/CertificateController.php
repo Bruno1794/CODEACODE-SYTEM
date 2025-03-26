@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 
 class CertificateController extends Controller
@@ -36,7 +37,7 @@ class CertificateController extends Controller
      * *         @OA\Schema(type="integer", example=1)
      * *     ),
      *     requestBody={
-     *       @OA\MediaType(
+     * @OA\MediaType(
      *         mediaType="multipart/form-data",
      *         @OA\Schema(
      *           type="object",
@@ -56,7 +57,7 @@ class CertificateController extends Controller
      *       )
      *     },
      *     responses={
-     *       @OA\Response(
+     * @OA\Response(
      *         response=200,
      *         description="Certificado Importado com seucesso",
      *         @OA\JsonContent(
@@ -72,6 +73,14 @@ class CertificateController extends Controller
     public function store(Request $request, Company $company): JsonResponse
     {
         $userLogado = Auth::user();
+        $certificado = Certificate::where('company_id', $company->id)->first();
+
+
+        //deleto o certificado do banco e deleto o certificado da pasta
+        if ($certificado) {
+            unlink(storage_path('app/private/' . $certificado->arquivo_certificado));
+            Certificate::destroy($certificado->id);
+        }
 
         $arquivoCertificado = base64_encode(file_get_contents($request->file('certificado')->getRealPath()));
         $idFocus = Company::where('id', $company->id)->first();
@@ -85,7 +94,7 @@ class CertificateController extends Controller
         if (!isset($dados['codigo'])) {
             $arquivo = $request->file('certificado');
             $nomeArquivo = time() . '_' . $arquivo->getClientOriginalName();
-            $caminho = $arquivo->storeAs('certificados/'.$company->name, $nomeArquivo, 'local');
+            $caminho = $arquivo->storeAs('certificados/' . $company->name, $nomeArquivo, 'local');
 
             Certificate::create([
                 'nome_certificado' => $arquivo->getClientOriginalName(),
@@ -98,21 +107,12 @@ class CertificateController extends Controller
                 'success' => true,
                 'message' => 'Certificado salvo com sucesso!'
             ], 200);
-
         } else {
             return response()->json([
                 'success' => false,
                 'message' => $dados['erros'][0]['mensagem']
             ]);
         }
-
-        /*
-                 $arquivo = $request->file('certificado');
-                 $nomeArquivo = time() . '_' . $arquivo->getClientOriginalName();
-                 $caminho = $arquivo->storeAs('certificados/'.$company->name, $nomeArquivo, 'local');*/
-
-
-
     }
 
 }
