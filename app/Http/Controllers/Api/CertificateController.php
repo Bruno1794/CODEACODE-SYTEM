@@ -99,7 +99,7 @@ class CertificateController extends Controller
             Certificate::create([
                 'nome_certificado' => $arquivo->getClientOriginalName(),
                 'arquivo_certificado' => $caminho,
-                'senha_certificado' => Hash::make($request->senha, ['rounds' => 12]),
+                'senha_certificado' => $request->senha,
                 'data_expiracao' => $dados['certificado_valido_ate'],
                 'company_id' => $userLogado->type_user === "FULL" ? $company->id : $userLogado->company_id,
             ]);

@@ -31,4 +31,13 @@ class ApiFocusNfeService
 
     }
 
+    public function delete(int $id)
+    {
+        $response = Http::withBasicAuth('Uj4lahyNaX9ejdvluKfD2Em83QOzXVj1','')
+            ->delete("{$this->baseUrl}/".$id);
+
+        return $response->json();
+
+    }
+
 }

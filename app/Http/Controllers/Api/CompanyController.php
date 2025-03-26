@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Certificate;
 use App\Models\Company;
 use App\Models\SettingNf;
 use App\Models\User;
@@ -322,11 +323,68 @@ class CompanyController extends Controller
             $company->update([
                 'status' => $company->status ? 0 : 1
             ]);
+            if ($company->status) {
+                $settings = SettingNf::where('company_id', $company->id)->first();
+                $certificado = Certificate::where('company_id', $company->id)->first();
+                $arquivoCertificado = base64_encode(
+                    file_get_contents
+                    (
+                        storage_path('app/private/' . $certificado->arquivo_certificado)
+                    )
+                );
+                $data = [
+                    'nome' => $company->name,
+                    'nome_fantasia' => $company->name_fantasy,
+                    'inscricao_estadual' => $company->inscription_state,
+                    'inscricao_municipal' => $company->inscricao_municipal,
+                    'cnpj' => $company->cpf_cnpj,
+                    'regime_tributario' => $company->regime_tributario,
+                    'email' => $company->email,
+                    'telefone' => $company->telefone,
+                    'logradouro' => $company->logradouro,
+                    'numero' => $company->phone,
+                    'complemento' => $company->complemento,
+                    'bairro' => $company->district_addres,
+                    'cep' => $company->cep,
+                    'municipio' => $company->city,
+                    'uf' => $company->state,
+                    //configuraçãoes
+                    'cpf_cnpj_contabilidade' => $settings->cpf_cnpj_contabilidade,
+                    'habilita_nfe' => $settings->habilita_nfe,
+                    'habilita_nfce' => $settings->habilita_nfce,
+                    'exibe_impostos_adicionais_danfe' => $settings->exibe_impostos_adicionais_danfe,
+                    'exibe_unidade_tributaria_danfe' => $settings->exibe_unidade_tributaria_danfe,
+                    'exibe_sempre_volumes_danfe' => $settings->exibe_sempre_volumes_danfe,
+                    'enviar_email_destinatario' => $settings->enviar_email_destinatario,
+                    'discrimina_impostos' => $settings->discrimina_impostos,
+                    'csc_nfce_producao' => $settings->csc_nfce_producao,
+                    'id_token_nfce_producao' => $settings->id_token_nfce_producao,
+                    'csc_nfce_homologacao' => $settings->csc_nfce_homologacao,
+                    'id_token_nfce_homologacao' => $settings->id_token_nfce_homologacao,
+                    'proximo_numero_nfe_producao' => $settings->proximo_numero_nfe_producao,
+                    'proximo_numero_nfe_homologacao' => $settings->proximo_numero_nfe_homologacao,
+                    'serie_nfe_producao' => $settings->serie_nfe_producao,
+                    'serie_nfe_homologacao' => $settings->serie_nfe_homologacao,
+                    'serie_nfce_producao' => $settings->serie_nfce_producao,
+                    'serie_nfce_homologacao' => $settings->serie_nfce_homologacao,
+                    //certificado
+                    "arquivo_certificado_base64" => $arquivoCertificado,
+                    "senha_certificado" => $certificado->senha_certificado
+                ];
+                $dados = $this->apiService->post($data);
+                $company->update([
+                    'id_nf' => $dados['id'],
+                    'token_producao' => $dados['token_producao'],
+                    'token_homogacao' => $dados['token_homologacao'],
+                ]);
+            } else {
+                $this->apiService->delete($company->id_nf);
+            }
         }
 
         return response()->json([
             'success' => true,
-            'message' => 'Company updated successfully',
+            'message' => $company->status ? 'Ativado com sucesso' : 'Desativado com sucesso',
         ], 200);
     }
 
