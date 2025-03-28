@@ -28,4 +28,9 @@ class Company extends Model
         'token_homogacao',
         'user_id',
     ];
+
+    function certificate()
+    {
+        return $this->hasMany(Certificate::class, 'company_id', 'id');
+    }
 }

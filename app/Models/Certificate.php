@@ -21,4 +21,5 @@ class Certificate extends Model
     protected $casts = [
         'data_expiracao' => 'date',
     ];
+
 }

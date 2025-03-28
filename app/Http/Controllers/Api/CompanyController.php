@@ -208,7 +208,8 @@ class CompanyController extends Controller
     {
         $user = Auth::user();
         if ($user->type_user === "FULL") {
-            $companey = Company::where('status', $request->status ? $request->status : 1)
+            $companey = Company::with('certificate')
+                ->where('status', $request->status ? $request->status : 1)
                 ->get();
             return response()->json([
                 'success' => true,
