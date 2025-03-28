@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\Api\CertificateController;
 use App\Http\Controllers\Api\CompanyController;
+use App\Http\Controllers\Api\NCMController;
 use App\Http\Controllers\Api\SettingController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
@@ -24,13 +25,17 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('companys-renew/{company}', [CompanyController::class, 'updateDataExpiration']);
 
     ##Usuario
-    Route::put('update-password/{user}',[UserController::class, 'updatePassword']);
+    Route::put('update-password/{user}', [UserController::class, 'updatePassword']);
 
     ##Setting
-    Route::get('settings',[SettingController::class, 'show']);
-    Route::put('settings/{settingNf}',[SettingController::class, 'update']);
+    Route::get('settings', [SettingController::class, 'show']);
+    Route::put('settings/{settingNf}', [SettingController::class, 'update']);
 
     ##Certificado
-    Route::post('certificates/{company}',[CertificateController::class, 'store']);
+    Route::post('certificates/{company}', [CertificateController::class, 'store']);
 
+    ##NCMS
+    Route::get('ncm', [NCMController::class, 'index']);
+    Route::post('ncm', [NCMController::class, 'store']);
+    Route::put('ncm/{ncm}', [NCMController::class, 'update']);
 });

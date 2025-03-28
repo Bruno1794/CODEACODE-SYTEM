@@ -53,11 +53,12 @@ class LoginController extends Controller
         if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
             $user = Auth::user();
 
+
             if ($user->type_user === "FULL") {
                 $token = $user->createToken('CODENF')->plainTextToken;
             } else {
                 if ($user->type_user !== "FULL") {
-                    $company = Company::where('id_user', Auth::id())
+                    $company = Company::where('id', Auth::id())
                         ->where('date_expiration', '>', now())
                         ->where('status', 1)->first();
                     if ($company) {

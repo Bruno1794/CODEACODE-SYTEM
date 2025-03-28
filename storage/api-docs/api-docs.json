@@ -774,6 +774,218 @@
                 ]
             }
         },
+        "/api/ncm": {
+            "get": {
+                "tags": [
+                    "Rota NCM"
+                ],
+                "summary": "Listar todas ncm da empresa",
+                "operationId": "b4c96fafa8ee536af047747375f0aaa0",
+                "responses": {
+                    "200": {
+                        "description": "Lista de ncm cadastrada=o",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "ncm": {
+                                            "properties": {
+                                                "nome_ncm": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "produtos das indústrias alimentares e bebidas;"
+                                                },
+                                                "codigo_ncm": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "28.041.00"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Rota NCM"
+                ],
+                "summary": "Cadastro de NCM",
+                "operationId": "feb7e39914392f0564f5ded69c8d65f0",
+                "requestBody": {
+                    "description": "Regime tributario:\n     * 1 = Simples Nacional, 2 = Simples Nacional - Excesso de Sublimite, 3 = Regime Normal'",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nome_ncm",
+                                    "codigo_ncm"
+                                ],
+                                "properties": {
+                                    "nome_ncm": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "Produtos das indústrias alimentares e bebidas"
+                                    },
+                                    "codigo_ncm": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "28.041.00"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ncm cadastrado com seucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "ncm": {
+                                            "properties": {
+                                                "nome_ncm": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "produtos das indústrias alimentares e bebidas;"
+                                                },
+                                                "codigo_ncm": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "28.041.00"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/ncm/{id}": {
+            "put": {
+                "tags": [
+                    "Rota NCM"
+                ],
+                "summary": "Altera dados do NCM",
+                "operationId": "d7c1978d7a54dca00e4ff2bdcffdc4de",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do NCM",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Credenciais do usuário",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nome_ncm",
+                                    "codigo_ncm"
+                                ],
+                                "properties": {
+                                    "nome_ncm": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "produtos das indústrias alimentares e bebidas"
+                                    },
+                                    "codigo_ncm": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "28.041.00"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "NCM Atualizada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "ncm": {
+                                            "properties": {
+                                                "nome_ncm": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "produtos das indústrias alimentares e bebidas;"
+                                                },
+                                                "codigo_ncm": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "28.041.00"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/settings": {
             "get": {
                 "tags": [
@@ -1166,6 +1378,10 @@
         {
             "name": "Rota para de importação do certificado",
             "description": "Endpoints relacionados a inportação do certificado"
+        },
+        {
+            "name": "Rota NCM",
+            "description": "Endpoints relacionados a ncm - (admin)"
         }
     ]
 }

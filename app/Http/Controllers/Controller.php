@@ -31,6 +31,10 @@ namespace App\Http\Controllers;
  * name="Rota para de importação do certificado",
  * description="Endpoints relacionados a inportação do certificado"
  * ),
+ * @OA\Tag(
+ *  name="Rota NCM",
+ *  description="Endpoints relacionados a ncm - (admin)"
+ *  ),
  * @OA\SecurityScheme(
  *          securityScheme="bearerAuth",
  *          type="http",
