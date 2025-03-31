@@ -986,6 +986,285 @@
                 ]
             }
         },
+        "/api/natureza": {
+            "get": {
+                "tags": [
+                    "Rota Naturaza de Operação"
+                ],
+                "summary": "Listar todas ncm da empresa",
+                "operationId": "d48dbdc0d30b32b6e7f0e4b4a2556656",
+                "responses": {
+                    "200": {
+                        "description": "Lista de natureza de operação",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "naturezas": {
+                                            "properties": {
+                                                "nome_natureza_operacao": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "VENDA DE MERCADORIA FORA DO ESTADO"
+                                                },
+                                                "tipo_natureza_operacao": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "ENTRADA"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Rota Naturaza de Operação"
+                ],
+                "summary": "Cadastro de Natureza de operação",
+                "operationId": "bfdb3cb9515ff784bb3e5c76b3369b71",
+                "requestBody": {
+                    "description": "Regime tributario:\n     * 1 = Simples Nacional, 2 = Simples Nacional - Excesso de Sublimite, 3 = Regime Normal'",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nome_ncm",
+                                    "codigo_ncm"
+                                ],
+                                "properties": {
+                                    "nome_natureza_operacao": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "VENDA DE MERCADORIA FORA DO ESTADO"
+                                    },
+                                    "tipo_natureza_operacao": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "ENTRADA"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ncm cadastrado com seucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "natureza": {
+                                            "properties": {
+                                                "nome_natureza_operacao": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "VENDA DE MERCADORIA FORA DO ESTADO"
+                                                },
+                                                "tipo_natureza_operacao": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "ENTRADA"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/natureza/{id}": {
+            "put": {
+                "tags": [
+                    "Rota Naturaza de Operação"
+                ],
+                "summary": "Altera dados da Naturaza de Operação",
+                "operationId": "b51fed0c7839542dcb4a865f7759bfdd",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Credenciais do usuário",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nome_natureza_operacao",
+                                    "tipo_natureza_operacao"
+                                ],
+                                "properties": {
+                                    "nome_natureza_operacao": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "VENDA DE MERCADORIA FORA DO ESTADO"
+                                    },
+                                    "tipo_natureza_operacao": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "SAIDA"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Naturaza de operação Atualizada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "natureza": {
+                                            "properties": {
+                                                "nome_natureza_operacao": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "VENDA DE MERCADORIA FORA DO ESTADO"
+                                                },
+                                                "tipo_natureza_operacao": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "SAIDA"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/natureza-status/{id}": {
+            "put": {
+                "tags": [
+                    "Rota Naturaza de Operação"
+                ],
+                "summary": "Ativando e desativando a natureza de operação",
+                "operationId": "12acca1680e7a025b49473be8ea9946e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Naturaza de operação Atualizada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "natureza": {
+                                            "properties": {
+                                                "nome_natureza_operacao": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "VENDA DE MERCADORIA FORA DO ESTADO"
+                                                },
+                                                "tipo_natureza_operacao": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "SAIDA"
+                                                },
+                                                "active": {
+                                                    "type": "boolean",
+                                                    "format": "text",
+                                                    "example": "0"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/settings": {
             "get": {
                 "tags": [
@@ -1382,6 +1661,10 @@
         {
             "name": "Rota NCM",
             "description": "Endpoints relacionados a ncm - (admin)"
+        },
+        {
+            "name": "Rota Naturaza de Operação",
+            "description": "Endpoints relacionados a natureza de operação - (admin)"
         }
     ]
 }

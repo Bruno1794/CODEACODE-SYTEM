@@ -28,6 +28,10 @@ class Company extends Model
         'token_homogacao',
         'user_id',
     ];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
 
     function certificate()
     {

@@ -29,4 +29,8 @@ class SettingNf extends Model
         'serie_nfce_homologacao',
         'company_id',
     ];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
 }

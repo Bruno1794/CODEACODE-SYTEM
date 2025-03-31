@@ -8,12 +8,14 @@ use App\Http\Controllers\Api\SettingController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\LoginController;
+use \App\Http\Controllers\Api\NaturezaOperacaoController;
 
 ## Login
 Route::post('login', [LoginController::class, 'login'])->name('login');
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-##Logout
+
+    ##Logout
     Route::post('/logout', [LoginController::class, 'logout']);
 
     ##Company
@@ -38,4 +40,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('ncm', [NCMController::class, 'index']);
     Route::post('ncm', [NCMController::class, 'store']);
     Route::put('ncm/{ncm}', [NCMController::class, 'update']);
+
+    ##NATUREZA DE OPERAÇÕES
+    Route::get('natureza', [NaturezaOperacaoController::class, 'index']);
+    Route::post('natureza', [NaturezaOperacaoController::class, 'store']);
+    Route::put('natureza/{naturezaOperacao}', [NaturezaOperacaoController::class, 'update']);
+    Route::put('natureza-status/{naturezaOperacao}', [NaturezaOperacaoController::class, 'updateStatus']);
 });

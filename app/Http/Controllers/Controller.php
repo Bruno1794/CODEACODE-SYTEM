@@ -35,6 +35,10 @@ namespace App\Http\Controllers;
  *  name="Rota NCM",
  *  description="Endpoints relacionados a ncm - (admin)"
  *  ),
+ * @OA\Tag(
+ * name="Rota Naturaza de Operação",
+ * description="Endpoints relacionados a natureza de operação - (admin)"
+ * ),
  * @OA\SecurityScheme(
  *          securityScheme="bearerAuth",
  *          type="http",
