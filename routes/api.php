@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\Api\CertificateController;
+use App\Http\Controllers\Api\CFOPController;
 use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\NCMController;
 use App\Http\Controllers\Api\SettingController;
@@ -14,7 +15,6 @@ use \App\Http\Controllers\Api\NaturezaOperacaoController;
 Route::post('login', [LoginController::class, 'login'])->name('login');
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-
     ##Logout
     Route::post('/logout', [LoginController::class, 'logout']);
 
@@ -46,4 +46,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('natureza', [NaturezaOperacaoController::class, 'store']);
     Route::put('natureza/{naturezaOperacao}', [NaturezaOperacaoController::class, 'update']);
     Route::put('natureza-status/{naturezaOperacao}', [NaturezaOperacaoController::class, 'updateStatus']);
+
+    ##CFOP
+    Route::get('cfop', [CFOPController::class, 'index']);
+    Route::post('cfop', [CFOPController::class, 'store']);
+    Route::put('cfop/{cfop}', [CFOPController::class, 'update']);
+    Route::put('cfop-status/{cfop}', [CFOPController::class, 'updateSatus']);
 });

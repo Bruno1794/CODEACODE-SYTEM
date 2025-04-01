@@ -9,6 +9,271 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/cfop": {
+            "get": {
+                "tags": [
+                    "Rota CFOPS"
+                ],
+                "summary": "Listar todos os CFOPS ATIVO",
+                "operationId": "0bb028d65e8f2766c27936f3fc2ca233",
+                "responses": {
+                    "200": {
+                        "description": "Lista de cfops",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "cfops": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "format": "text",
+                                                    "example": "1"
+                                                },
+                                                "codigo": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "VENDAS DE MERCADORIA"
+                                                },
+                                                "descricao": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "ENTRADA"
+                                                },
+                                                "active": {
+                                                    "type": "boolean",
+                                                    "format": "text",
+                                                    "example": "1"
+                                                },
+                                                "natureza_operacoes_id": {
+                                                    "type": "integer",
+                                                    "format": "text",
+                                                    "example": "1"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Rota CFOPS"
+                ],
+                "summary": "Cadastro de cfops",
+                "operationId": "d838ca0ef7cb1c7fe2889aecd7c8402d",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "codigo",
+                                    "descricao"
+                                ],
+                                "properties": {
+                                    "codigo": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "5102"
+                                    },
+                                    "descricao": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "Venda dentro do estado"
+                                    },
+                                    "natureza_operacoes_id": {
+                                        "type": "interger",
+                                        "format": "text",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "CFOP Cadastrado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "mesage": {
+                                            "type": "string",
+                                            "example": "CFOP cadastrado com sucesso"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/cfop/{id}": {
+            "put": {
+                "tags": [
+                    "Rota CFOPS"
+                ],
+                "summary": "Altera dados do cfop",
+                "operationId": "d884ce5bca9db5d324642a337ad738ce",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Credenciais do usuário",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "codigo",
+                                    "descricao"
+                                ],
+                                "properties": {
+                                    "codigo": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "5102"
+                                    },
+                                    "descricao": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "Venda dentro do estado"
+                                    },
+                                    "natureza_operacoes_id": {
+                                        "type": "interger",
+                                        "format": "text",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "CFOP Atualizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "mesage": {
+                                            "type": "string",
+                                            "example": "CFOP atualizado com sucesso"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/cfop-status/{id}": {
+            "put": {
+                "tags": [
+                    "Rota CFOPS"
+                ],
+                "summary": "Ativando e desativando CFOP",
+                "operationId": "250d81a86b677884a4efaabc6fda9a0b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "CFOP Atualizada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "mesage": {
+                                            "type": "boolean",
+                                            "example": "CFOP Ativado com sucesso"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/certificates/{id}": {
             "post": {
                 "tags": [
@@ -1009,7 +1274,7 @@
                                                 "nome_natureza_operacao": {
                                                     "type": "string",
                                                     "format": "text",
-                                                    "example": "VENDA DE MERCADORIA FORA DO ESTADO"
+                                                    "example": "VENDAS DE MERCADORIA"
                                                 },
                                                 "tipo_natureza_operacao": {
                                                     "type": "string",
@@ -1054,7 +1319,7 @@
                                     "nome_natureza_operacao": {
                                         "type": "string",
                                         "format": "text",
-                                        "example": "VENDA DE MERCADORIA FORA DO ESTADO"
+                                        "example": "VENDAS DE MERCADORIA"
                                     },
                                     "tipo_natureza_operacao": {
                                         "type": "string",
@@ -1083,7 +1348,7 @@
                                                 "nome_natureza_operacao": {
                                                     "type": "string",
                                                     "format": "text",
-                                                    "example": "VENDA DE MERCADORIA FORA DO ESTADO"
+                                                    "example": "VENDAS DE MERCADORIA"
                                                 },
                                                 "tipo_natureza_operacao": {
                                                     "type": "string",
@@ -1233,7 +1498,7 @@
                                                 "nome_natureza_operacao": {
                                                     "type": "string",
                                                     "format": "text",
-                                                    "example": "VENDA DE MERCADORIA FORA DO ESTADO"
+                                                    "example": "VENDAS DE MERCADORIA"
                                                 },
                                                 "tipo_natureza_operacao": {
                                                     "type": "string",
@@ -1665,6 +1930,10 @@
         {
             "name": "Rota Naturaza de Operação",
             "description": "Endpoints relacionados a natureza de operação - (admin)"
+        },
+        {
+            "name": "Rota CFOPS",
+            "description": "Endpoints relacionados CFOPS - (admin)"
         }
     ]
 }

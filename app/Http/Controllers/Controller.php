@@ -39,6 +39,10 @@ namespace App\Http\Controllers;
  * name="Rota Naturaza de Operação",
  * description="Endpoints relacionados a natureza de operação - (admin)"
  * ),
+ * @OA\Tag(
+ * name="Rota CFOPS",
+ * description="Endpoints relacionados CFOPS - (admin)"
+ * ),
  * @OA\SecurityScheme(
  *          securityScheme="bearerAuth",
  *          type="http",

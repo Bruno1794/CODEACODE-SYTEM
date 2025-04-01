@@ -27,7 +27,7 @@ class NaturezaOperacaoController extends Controller
      *          @OA\JsonContent(
      *              @OA\Property(property="success", type="boolean", example="true"),
      *              @OA\Property(property="naturezas", type="object",
-     *               @OA\Property(property="nome_natureza_operacao", type="string", format="text", example="VENDA DE MERCADORIA FORA DO ESTADO"),
+     *               @OA\Property(property="nome_natureza_operacao", type="string", format="text", example="VENDAS DE MERCADORIA"),
      *               @OA\Property(property="tipo_natureza_operacao", type="string", format="text", example="ENTRADA"),
 
      * )
@@ -65,7 +65,7 @@ class NaturezaOperacaoController extends Controller
      *
     @OA\JsonContent(
      *              required={"nome_ncm", "codigo_ncm"},
-     *              @OA\Property(property="nome_natureza_operacao", type="string", format="text", example="VENDA DE MERCADORIA FORA DO ESTADO"),
+     *              @OA\Property(property="nome_natureza_operacao", type="string", format="text", example="VENDAS DE MERCADORIA"),
      * *              @OA\Property(property="tipo_natureza_operacao", type="string", format="text", example="ENTRADA"),
 
      *          )
@@ -76,7 +76,7 @@ class NaturezaOperacaoController extends Controller
      *          @OA\JsonContent(
      *              @OA\Property(property="success", type="boolean", example="true"),
      *              @OA\Property(property="natureza", type="object",
-     * *               @OA\Property(property="nome_natureza_operacao", type="string", format="text", example="VENDA DE MERCADORIA FORA DO ESTADO"),
+     * *               @OA\Property(property="nome_natureza_operacao", type="string", format="text", example="VENDAS DE MERCADORIA"),
      * *               @OA\Property(property="tipo_natureza_operacao", type="string", format="text", example="ENTRADA"),
      *
      * * )
@@ -187,7 +187,7 @@ class NaturezaOperacaoController extends Controller
      *          @OA\JsonContent(
      *              @OA\Property(property="success", type="boolean", example="true"),
      *              @OA\Property(property="natureza", type="object",
-     * * *               @OA\Property(property="nome_natureza_operacao", type="string", format="text", example="VENDA DE MERCADORIA FORA DO ESTADO"),
+     * * *               @OA\Property(property="nome_natureza_operacao", type="string", format="text", example="VENDAS DE MERCADORIA"),
      * * *               @OA\Property(property="tipo_natureza_operacao", type="string", format="text", example="SAIDA"),
      * * *               @OA\Property(property="active", type="boolean", format="text", example="0"),
      * *
