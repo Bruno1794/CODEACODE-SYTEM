@@ -216,8 +216,9 @@ class CFOPController extends Controller
      */
     public function updateSatus(CFOP $cfop): JsonResponse
     {
+
         $userLogado = Auth::user();
-        $validaNatureza = NaturezaOperacao::where('id', $cfop->id)
+        $validaNatureza = NaturezaOperacao::where('id', $cfop->natureza_operacoes_id)
             ->where('company_id', $userLogado->company_id)->first();
         if ($validaNatureza) {
             $cfop->update([
