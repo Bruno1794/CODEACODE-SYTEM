@@ -43,6 +43,14 @@ namespace App\Http\Controllers;
  * name="Rota CFOPS",
  * description="Endpoints relacionados CFOPS - (admin)"
  * ),
+ * @OA\Tag(
+ * name="Rota CSTs",
+ * description="Endpoints relacionados CSts - (NAO PRECISA CRIAR NO SISTEMA APENAS PARA LISTAR NO CADASTRO DE TRIBUTAÇÕES)"
+ * ),
+ * @OA\Tag(
+ * name="Rota Tributações",
+ * description="Endpoints relacionados Tributações - (admin)"
+ * ),
  * @OA\SecurityScheme(
  *          securityScheme="bearerAuth",
  *          type="http",

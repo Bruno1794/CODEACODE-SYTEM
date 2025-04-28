@@ -929,6 +929,226 @@
                 ]
             }
         },
+        "/api/icmsOrigem": {
+            "get": {
+                "tags": [
+                    "Rota CSTs"
+                ],
+                "summary": "Listar todas ICMS DE ORIGEM",
+                "operationId": "c6e8f9420e15d5d8fad58c207659fa55",
+                "responses": {
+                    "200": {
+                        "description": "Lista de ICMS DE ORIGIEM",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "icms_origem": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "1"
+                                                },
+                                                "codigo": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "Tributação para venda de bebida"
+                                                },
+                                                "descricao": {
+                                                    "type": "string",
+                                                    "format": "string",
+                                                    "example": "Nacional"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/icmsSituacaoTributaria": {
+            "get": {
+                "tags": [
+                    "Rota CSTs"
+                ],
+                "summary": "Listar todas ICMS SITUAÇÃO TRIBUTARIA",
+                "operationId": "a873e37aa34fa786e64230bb83f9b656",
+                "responses": {
+                    "200": {
+                        "description": "Lista de ICMS SITUAÇÃO TRIBUTARIA",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "icms_situacao_tributaria": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "1"
+                                                },
+                                                "codigo": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "Tributação para venda de bebida"
+                                                },
+                                                "descricao": {
+                                                    "type": "string",
+                                                    "format": "string",
+                                                    "example": "Nacional"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/pisSituacaoTributaria": {
+            "get": {
+                "tags": [
+                    "Rota CSTs"
+                ],
+                "summary": "Listar todas PIS SITUAÇÃO TRIBUTARIA",
+                "operationId": "78afe90d0b1ac7940321040e335fa22f",
+                "responses": {
+                    "200": {
+                        "description": "Lista de PIS SITUAÇÃO TRIBUTARIA",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "pis_situacao_tributaria": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "1"
+                                                },
+                                                "codigo": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "Tributação para venda de bebida"
+                                                },
+                                                "descricao": {
+                                                    "type": "string",
+                                                    "format": "string",
+                                                    "example": "Nacional"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/cofinsSituacaoTributaria": {
+            "get": {
+                "tags": [
+                    "Rota CSTs"
+                ],
+                "summary": "Listar todas COFINS SITUAÇÃO TRIBUTARIA",
+                "operationId": "9db24ad69314fd11240098c3f9610792",
+                "responses": {
+                    "200": {
+                        "description": "Lista de PIS SITUAÇÃO TRIBUTARIA",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "cofins_situacao_tributaria": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "1"
+                                                },
+                                                "codigo": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "Tributação para venda de bebida"
+                                                },
+                                                "descricao": {
+                                                    "type": "string",
+                                                    "format": "string",
+                                                    "example": "Nacional"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/login": {
             "post": {
                 "tags": [
@@ -1818,6 +2038,436 @@
                 ]
             }
         },
+        "/api/tributacoes": {
+            "get": {
+                "tags": [
+                    "Rota Tributações"
+                ],
+                "summary": "Listar todas tributações da empresa",
+                "operationId": "d33c6d0209e52c6a6f6bc007c766e3bf",
+                "responses": {
+                    "200": {
+                        "description": "Lista de tributaçao cadastrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "tributacoes": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "1"
+                                                },
+                                                "nome": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "Tributação para venda de bebida"
+                                                },
+                                                "pis_aliquota_porcentual": {
+                                                    "type": "decimal",
+                                                    "format": "decimal",
+                                                    "example": "1"
+                                                },
+                                                "cofins_aliquota_porcentual": {
+                                                    "type": "decimal",
+                                                    "format": "decimal",
+                                                    "example": "2"
+                                                },
+                                                "icms_aliquota": {
+                                                    "type": "decimal",
+                                                    "format": "decimal",
+                                                    "example": "5"
+                                                },
+                                                "cfop_id": {
+                                                    "type": "integer",
+                                                    "format": "decimal",
+                                                    "example": "6"
+                                                },
+                                                "icms_origem_id": {
+                                                    "type": "integer",
+                                                    "format": "decimal",
+                                                    "example": "7"
+                                                },
+                                                "icms_situacao_tributaria_id": {
+                                                    "type": "integer",
+                                                    "format": "decimal",
+                                                    "example": "9"
+                                                },
+                                                "pis_situacao_tributaria_id": {
+                                                    "type": "integer",
+                                                    "format": "decimal",
+                                                    "example": "4"
+                                                },
+                                                "cofins_situacao_tributaria_id": {
+                                                    "type": "integer",
+                                                    "format": "decimal",
+                                                    "example": "3"
+                                                },
+                                                "ativo": {
+                                                    "type": "integer",
+                                                    "format": "decimal",
+                                                    "example": "1"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Rota Tributações"
+                ],
+                "summary": "Update de Tributações",
+                "operationId": "81a461c6f34e9cdaf82dafc437b973a3",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nome"
+                                ],
+                                "properties": {
+                                    "nome": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "Tributação para venda de bebida"
+                                    },
+                                    "icms_aliquota": {
+                                        "type": "decimal",
+                                        "format": "decimal",
+                                        "example": "12"
+                                    },
+                                    "pis_aliquota_porcentual": {
+                                        "type": "decimal",
+                                        "format": "decimal",
+                                        "example": "1"
+                                    },
+                                    "cofins_aliquota_porcentual": {
+                                        "type": "decimal",
+                                        "format": "decimal",
+                                        "example": "4"
+                                    },
+                                    "cfop_id": {
+                                        "type": "decimal",
+                                        "format": "decimal",
+                                        "example": "3"
+                                    },
+                                    "icms_origem_id": {
+                                        "type": "decimal",
+                                        "format": "decimal",
+                                        "example": "2"
+                                    },
+                                    "icms_situacao_tributaria_id": {
+                                        "type": "decimal",
+                                        "format": "decimal",
+                                        "example": "4"
+                                    },
+                                    "pis_situacao_tributaria_id": {
+                                        "type": "decimal",
+                                        "format": "decimal",
+                                        "example": "6"
+                                    },
+                                    "cofins_situacao_tributaria_id": {
+                                        "type": "decimal",
+                                        "format": "decimal",
+                                        "example": "3"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tributaçao Alterada com seucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "tributacao": {
+                                            "properties": {
+                                                "nome": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "Tributação para venda de bebida"
+                                                },
+                                                "icms_aliquota": {
+                                                    "type": "decimal",
+                                                    "format": "decimal",
+                                                    "example": "1"
+                                                },
+                                                "pis_aliquota_porcentual": {
+                                                    "type": "decimal",
+                                                    "format": "decimal",
+                                                    "example": "2"
+                                                },
+                                                "cofins_aliquota_porcentual": {
+                                                    "type": "decimal",
+                                                    "format": "decimal",
+                                                    "example": "3"
+                                                },
+                                                "cfop_id": {
+                                                    "type": "decimal",
+                                                    "format": "decimal",
+                                                    "example": "3"
+                                                },
+                                                "icms_origem_id": {
+                                                    "type": "decimal",
+                                                    "format": "decimal",
+                                                    "example": "2"
+                                                },
+                                                "icms_situacao_tributaria_id": {
+                                                    "type": "decimal",
+                                                    "format": "decimal",
+                                                    "example": "4"
+                                                },
+                                                "pis_situacao_tributaria_id": {
+                                                    "type": "decimal",
+                                                    "format": "decimal",
+                                                    "example": "4"
+                                                },
+                                                "cofins_situacao_tributaria_id": {
+                                                    "type": "decimal",
+                                                    "format": "decimal",
+                                                    "example": "4"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Rota Tributações"
+                ],
+                "summary": "Cadastro de Tributações",
+                "operationId": "edc55fbee208e0509443faf459995deb",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nome"
+                                ],
+                                "properties": {
+                                    "nome": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "Tributação para venda de bebida"
+                                    },
+                                    "icms_aliquota": {
+                                        "type": "decimal",
+                                        "format": "decimal",
+                                        "example": "12"
+                                    },
+                                    "pis_aliquota_porcentual": {
+                                        "type": "decimal",
+                                        "format": "decimal",
+                                        "example": "1"
+                                    },
+                                    "cofins_aliquota_porcentual": {
+                                        "type": "decimal",
+                                        "format": "decimal",
+                                        "example": "4"
+                                    },
+                                    "cfop_id": {
+                                        "type": "decimal",
+                                        "format": "decimal",
+                                        "example": "3"
+                                    },
+                                    "icms_origem_id": {
+                                        "type": "decimal",
+                                        "format": "decimal",
+                                        "example": "2"
+                                    },
+                                    "icms_situacao_tributaria_id": {
+                                        "type": "decimal",
+                                        "format": "decimal",
+                                        "example": "4"
+                                    },
+                                    "pis_situacao_tributaria_id": {
+                                        "type": "decimal",
+                                        "format": "decimal",
+                                        "example": "6"
+                                    },
+                                    "cofins_situacao_tributaria_id": {
+                                        "type": "decimal",
+                                        "format": "decimal",
+                                        "example": "3"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tributaçao cadastrado com seucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "tributacao": {
+                                            "properties": {
+                                                "nome": {
+                                                    "type": "string",
+                                                    "format": "text",
+                                                    "example": "Tributação para venda de bebida"
+                                                },
+                                                "icms_aliquota": {
+                                                    "type": "decimal",
+                                                    "format": "decimal",
+                                                    "example": "1"
+                                                },
+                                                "pis_aliquota_porcentual": {
+                                                    "type": "decimal",
+                                                    "format": "decimal",
+                                                    "example": "2"
+                                                },
+                                                "cofins_aliquota_porcentual": {
+                                                    "type": "decimal",
+                                                    "format": "decimal",
+                                                    "example": "3"
+                                                },
+                                                "cfop_id": {
+                                                    "type": "decimal",
+                                                    "format": "decimal",
+                                                    "example": "3"
+                                                },
+                                                "icms_origem_id": {
+                                                    "type": "decimal",
+                                                    "format": "decimal",
+                                                    "example": "2"
+                                                },
+                                                "icms_situacao_tributaria_id": {
+                                                    "type": "decimal",
+                                                    "format": "decimal",
+                                                    "example": "4"
+                                                },
+                                                "pis_situacao_tributaria_id": {
+                                                    "type": "decimal",
+                                                    "format": "decimal",
+                                                    "example": "4"
+                                                },
+                                                "cofins_situacao_tributaria_id": {
+                                                    "type": "decimal",
+                                                    "format": "decimal",
+                                                    "example": "4"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/tributacoes-status": {
+            "put": {
+                "tags": [
+                    "Rota Tributações"
+                ],
+                "summary": "Update de Tributações",
+                "operationId": "0cec81e1d39e2f149ab2a0262a878f93",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tributaçao Alterada com seucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "true"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Tributação ativada/desatavda"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/update-password/{id}": {
             "put": {
                 "tags": [
@@ -1934,6 +2584,14 @@
         {
             "name": "Rota CFOPS",
             "description": "Endpoints relacionados CFOPS - (admin)"
+        },
+        {
+            "name": "Rota CSTs",
+            "description": "Endpoints relacionados CSts - (NAO PRECISA CRIAR NO SISTEMA APENAS PARA LISTAR NO CADASTRO DE TRIBUTAÇÕES)"
+        },
+        {
+            "name": "Rota Tributações",
+            "description": "Endpoints relacionados Tributações - (admin)"
         }
     ]
 }
